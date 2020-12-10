@@ -28,7 +28,7 @@ const App: () => React$Node = () => {
 	 
   return ( 
   <>
-  <Registration></Registration>
+  <Program></Program>
   </>
   );
 	
