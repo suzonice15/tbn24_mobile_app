@@ -15,6 +15,7 @@ import {
   Text,
   FlatList,
   StatusBar,
+  Alert,
   Button
 } from 'react-native';
  import Video from 'react-native-video';
@@ -23,7 +24,29 @@ import {
 
 class About  extends Component {
 	
-	 
+	 constructor(){
+		
+		super();
+		this.state={
+			about:'',
+ 			
+		}
+	}
+	
+	  
+	   componentDidMount=()=>{
+		
+	 let URL="https://www.tbn24.com/api/about";
+		let config={method:'GET'}
+		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
+	 			this.setState({about:response.replace(/(<([^>]+)>)/gi, "")});
+		}).catch((error)=>{
+			 
+			Alert.alert("Internet Problem"); 
+		});
+		
+				
+	}
 	 
 	
 	render(){
@@ -43,8 +66,7 @@ ABOUT US
 
 <Text style={{textAlign:'left',paddingLeft:10,color:'black',margin:8,fontSize:19}}>
 
-The voice of Non Resident Bangladeshis
-TBN24 is a Bangla language live television channel in North America provides content that is informative, educational, socially responsible, entertaining and comparable with world-class television broadcasters. TBN24 is the first Bangla 24x7 live television channel to produce original content here in the USA. This channel is currently available in US, Canada, Europe, Australia, and Middle-East.TBN24 Television is the for non-resident Bangladeshi living across the globe as well as people whose mother tongue is Bangla.
+	{this.state.about}
 </Text>
   
   

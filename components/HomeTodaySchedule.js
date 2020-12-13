@@ -22,7 +22,7 @@ import {
  import {LivePlayer} from "react-native-live-stream";
  
 
-class TodayShedule  extends Component {
+class HomeTodaySchedule  extends Component {
 
 	constructor(){
 
@@ -97,9 +97,7 @@ componentDidMount=()=>{
 		if(this.state.loading==true){
 			return(
 			<View>
-			 <View style={{backgroundColor:'#B10000'}} >  
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	 </View> 
+			 
 			<View style={{flex:1,marginTop:100,flexDirection:'column',justifyContent:'center'}} >
 <ActivityIndicator size="large" color="red" />
 </View>
@@ -112,9 +110,7 @@ componentDidMount=()=>{
   
   
     <View>
-  <View style={{backgroundColor:'#B10000'}} >  
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	 </View> 
+   
 	 
   <View style={{backgroundColor:'white'}} >  
   <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
@@ -151,4 +147,4 @@ const styles = StyleSheet.create({
    
 });
 
-export default TodayShedule;
+export default HomeTodaySchedule;

@@ -28,7 +28,7 @@ const App: () => React$Node = () => {
 	 
   return ( 
   <>
-  <Program></Program>
+  <Contact></Contact>
   </>
   );
 	
