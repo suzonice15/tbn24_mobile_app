@@ -180,7 +180,18 @@ android {
     }
 }
 
+
 dependencies {
+
+
+compile 'com.android.support:multidex:2.0.1'
+
+  android {
+      defaultConfig {
+          multiDexEnabled true
+      }
+  }
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

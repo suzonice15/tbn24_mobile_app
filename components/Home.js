@@ -7,6 +7,8 @@
  */
 
 import React,{Component} from 'react';
+import { Navigation } from "react-native-navigation";
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -24,13 +26,24 @@ import {
 class Home  extends Component {
 	
 	
-	constructor(){
-		
-		super();
+	constructor(props){		
+		super(props);
+		Navigation.events().bindComponent(this)
 		this.state={
 			video:'',
  			
 		}
+	}
+	
+	
+	navigationButtonPressed({componentId}){
+		Navigation.mergeOptions(this.props.componentId,{			
+			sideMenu:{
+				left:{
+					visible:true
+				}
+			}
+		});
 	}
 	   componentDidMount=()=>{
 		
