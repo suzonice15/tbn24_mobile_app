@@ -6,22 +6,26 @@ import {
   View,
   Image,
   Text,
+  TouchableHighlight,
   Alert,
   ActivityIndicator ,
   FlatList,
   StatusBar,
-  TouchableHighlight
+  
 } from 'react-native';
  import Video from 'react-native-video';
  import {LivePlayer} from "react-native-live-stream";
- 
+ import { Navigation } from "react-native-navigation";
+
 
 class Program  extends Component {
 	
 	
-	constructor(){
+	constructor(props){
 		
-		super();
+		super(props);
+				Navigation.events().bindComponent(this)
+
 		this.state={
 			Data:[],
 			loading:true,
@@ -29,6 +33,8 @@ class Program  extends Component {
 			
 		}
 	}
+	 
+	
 	PullRefresh=()=>{
 				this.onApiCall();
 
@@ -36,7 +42,7 @@ class Program  extends Component {
 	}
 	onApiCall=()=>{
 		
-		 	 			this.setState({refressicon:true});
+		this.setState({refressicon:true});
 
 		let URL="https://www.tbn24.com/api/program";
 		let config={method:'GET'}
@@ -54,10 +60,22 @@ class Program  extends Component {
 		this.onApiCall();
 				
 	}
+	sideMenuShow=()=>{	
+ 		Navigation.mergeOptions(this.props.componentId,{			
+			sideMenu:{
+				left:{
+					visible:true
+				}
+			}
+		});
+	
+	}
+	
 	
 	   
 	 ChildView=({program_name,program_image})=>{
 		 return(
+		   <View>
 		 <TouchableHighlight>
 		 <View style={{flexDirection:'column',backgroundColor:'#B10000',width:190,margin:5}}>
 		  <View>
@@ -73,6 +91,9 @@ class Program  extends Component {
 	
 		 </View>
 		  </TouchableHighlight>
+		  		   </View>
+
+		 
 		 )
 	 }
 	
@@ -80,39 +101,43 @@ class Program  extends Component {
 		
 		if(this.state.loading==true){
 			return(
-			<View>
-			 <View style={{backgroundColor:'#B10000'}} >  
+ 			 <View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}}>  
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	 </View> 
-			<View style={{flex:1,marginTop:100,flexDirection:'column',justifyContent:'center'}} >
-<ActivityIndicator size="large" color="red" />
-</View>
-</View>
-			)
+	
+	<TouchableHighlight onPress={this.sideMenuShow}>	
+	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	
+	</TouchableHighlight>
+	</View> 	
+			
+ 			)
 			
 		} else {
 			
 			
-  return (    
-    <View>  
-   <View style={{backgroundColor:'#B10000'}} >  
+  return ( 
+<ScrollView>
+<View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}}>  
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	 </View> 
+	
+	<TouchableHighlight onPress={this.sideMenuShow}>	
+	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	
+	</TouchableHighlight>
+	</View>   
+            
 	 
-  <View style={{backgroundColor:'white'}} >  
-  <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
+   <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
 Our Programs
 </Text> 
+ 
 
  
  <FlatList onRefresh={()=>this.PullRefresh()} refreshing={this.state.refressicon} numColumns={2} data={this.state.Data}   keyExtractor={item =>item.id.toString()} renderItem={({item})=><this.ChildView program_name={item.program_name} program_image={item.program_image}   />} />
-  
-   
-   </View>
+     
     <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
-		{this.state.shedule}</Text> 
- 
-  </View>   
+		{this.state.shedule}</Text>  
+ </ScrollView>  
   );
 			
 		}

@@ -5,6 +5,7 @@
  * @format
  * @flow strict-local
  */
+import { Navigation } from "react-native-navigation";
 
 import React,{Component} from 'react';
 import {
@@ -16,6 +17,7 @@ import {
   FlatList,
   StatusBar,
   Alert,
+  TouchableHighlight,
   Button
 } from 'react-native';
  import Video from 'react-native-video';
@@ -24,14 +26,18 @@ import {
 
 class About  extends Component {
 	
-	 constructor(){
+	 constructor(props){
 		
-		super();
+		super(props);
+		Navigation.events().bindComponent(this)
+
 		this.state={
 			about:'',
  			
 		}
 	}
+	 
+	
 	
 	  
 	   componentDidMount=()=>{
@@ -47,6 +53,18 @@ class About  extends Component {
 		
 				
 	}
+	
+	sideMenuShow=()=>{	
+ 		Navigation.mergeOptions(this.props.componentId,{			
+			sideMenu:{
+				left:{
+					visible:true
+				}
+			}
+		});
+	
+	}
+
 	 
 	
 	render(){
@@ -54,21 +72,23 @@ class About  extends Component {
   
   
     <ScrollView>  
-  <View style={{backgroundColor:'#B10000'}} >  
+  <View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}} >  
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	 </View> 
+<TouchableHighlight onPress={this.sideMenuShow}>	
+	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	
+	</TouchableHighlight>
+	</View> 
 	 
   <View style={{backgroundColor:'white'}} >  
   <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
-
 ABOUT US
 </Text>
-
+ 
 <Text style={{textAlign:'left',paddingLeft:10,color:'black',margin:8,fontSize:19}}>
 
 	{this.state.about}
 </Text>
-  
   
   </View>
  

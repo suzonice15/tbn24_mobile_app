@@ -16,7 +16,29 @@ Navigation.registerComponent('RegistrationPage', () => Registration);
 Navigation.registerComponent('ContactPage', () => Contact);
 Navigation.registerComponent('HomePage', () => Home);
 Navigation.registerComponent('SideMenuPage', () => LeftSideMenu);
- 
+
+Navigation.setDefaultOptions({
+  statusBar: {
+    backgroundColor: 'red'
+  },
+  topBar: {
+    title: {
+      color: 'white'
+    },
+    backButton: {
+      color: 'white'
+    },
+    background: {
+      color: 'red'
+    }
+  },
+  bottomTab: {
+    fontSize: 14,
+    selectedFontSize: 14
+  }
+});
+
+
 Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setRoot({
     root: {
@@ -33,37 +55,16 @@ Navigation.events().registerAppLaunchedListener(() => {
                   children:[
                       {
                           component:{
-                              name:"HomePage",
+                              name:"ProgramPage",
 							   options:{
-				  topBar:{
-					  leftButtons:{
-						  icon:require('./images/menu.png')
-					  }	 				  
-				  }					  
+				 				  
 				  }
                           }
                       }
                   ]
-              },
-			  
+              }
           }
-      },
-	  children:[
-        {
-            component:{
-                name:"ProgramPage",
-                options:{
-                    bottomTab:{
-                        text:"Program",
-                        icon:require('./images/logo.png')
-
-                    }
-                }
-            }
-        },
-         
-    ]
-
+      }
 
     }
 });
