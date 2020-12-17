@@ -61,8 +61,7 @@ class About  extends Component {
 					visible:true
 				}
 			}
-		});
-	
+		});	
 	}
 
 	 
@@ -74,7 +73,7 @@ class About  extends Component {
     <ScrollView>  
   <View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}} >  
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-<TouchableHighlight onPress={this.sideMenuShow}>	
+<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
 	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
 	
 	</TouchableHighlight>

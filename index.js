@@ -34,7 +34,8 @@ Navigation.setDefaultOptions({
   },
   bottomTab: {
     fontSize: 14,
-    selectedFontSize: 14
+    selectedFontSize: 14,
+	backgroundColor:''
   }
 });
 
@@ -55,17 +56,22 @@ Navigation.events().registerAppLaunchedListener(() => {
                   children:[
                       {
                           component:{
-                              name:"ProgramPage",
+                              name:"HomePage",
 							   options:{
+								   topBar:{
+									   title:{
+										   text:"Home"
+									   }
+								   }
 				 				  
-				  }
+				              }
                           }
                       }
                   ]
               }
           }
-      }
-
+      },
+	     
     }
 });
 });

@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
 import React,{Component} from 'react';
 import {
@@ -15,12 +8,15 @@ import {
   Text,
   FlatList,
   StatusBar,
+  TouchableHighlight,
   Button,
+  ScrollView,
   ActivityIndicator
 } from 'react-native';
  import Video from 'react-native-video';
  import {LivePlayer} from "react-native-live-stream";
  
+ import { Navigation } from "react-native-navigation";
 
 class TodayShedule  extends Component {
 
@@ -60,10 +56,23 @@ componentDidMount=()=>{
 
 }
 
+sideMenuShow=()=>{	
+ 		Navigation.mergeOptions(this.props.componentId,{			
+			sideMenu:{
+				left:{
+					visible:true
+				}
+			}
+		});
+	
+	}
+
  
 	 ChildView=({program_name,schedule_date,img,start_time})=>{
 
 		 return(
+		 		   <View>
+
 		 <View style={{flexDirection:'row',backgroundColor:'white',border:2,borderColor:'black', margin:3,flex:100}}>
 		   
 		  <View style={{flex:30}}>
@@ -88,6 +97,7 @@ componentDidMount=()=>{
 		 
 	
 		 </View>
+		 </View>
 		 )
 	 }
 	
@@ -96,14 +106,16 @@ componentDidMount=()=>{
 		
 		if(this.state.loading==true){
 			return(
-			<View>
-			 <View style={{backgroundColor:'#B10000'}} >  
+			<View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}}>  
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	 </View> 
-			<View style={{flex:1,marginTop:100,flexDirection:'column',justifyContent:'center'}} >
-<ActivityIndicator size="large" color="red" />
-</View>
-</View>
+	
+	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
+	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	
+	</TouchableHighlight>
+
+	</View> 	
+			
 			)
 			
 		} else {
@@ -111,10 +123,15 @@ componentDidMount=()=>{
 	  return ( 
   
   
-    <View>
-  <View style={{backgroundColor:'#B10000'}} >  
+    <ScrollView>
+  <View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}}>  
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	 </View> 
+	
+	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
+	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	
+	</TouchableHighlight>
+	</View>   
 	 
   <View style={{backgroundColor:'white'}} >  
   <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
@@ -128,7 +145,7 @@ Today's Schedule
   </View>
  
  
-  </View>
+  </ScrollView>
      
   );
 			

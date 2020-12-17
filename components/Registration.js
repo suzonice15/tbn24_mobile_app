@@ -16,24 +16,41 @@ import {
   FlatList,
   StatusBar,
   Button,
+  TouchableHighlight,
   TextInput
 } from 'react-native';
  import Video from 'react-native-video';
  import {LivePlayer} from "react-native-live-stream";
- 
+    import { Navigation } from "react-native-navigation";
+
 
 class Registration  extends Component {
 	
 	 
+sideMenuShow=()=>{	
+ 		Navigation.mergeOptions(this.props.componentId,{			
+			sideMenu:{
+				left:{
+					visible:true
+				}
+			}
+		});
+	
+	}	
 	
 	render(){
   return ( 
   
   
     <ScrollView>  
-  <View style={{backgroundColor:'#B10000'}} >  
+   <View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}}>  
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	 </View> 
+	
+	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
+	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	
+	</TouchableHighlight>
+	</View>
 	 
   <View style={{backgroundColor:'white',borderColor: 'black',
       borderWidth:1,margin:5}} >  

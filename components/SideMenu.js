@@ -23,6 +23,12 @@ Program=()=>{
 						visible:false						
 					}
 				}
+				, topBar: {
+    title: {
+      text: 'Program',
+      color: 'white'
+    }
+				  }
 			}
 		}
 	})
@@ -39,6 +45,12 @@ Shedule=()=>{
 						visible:false						
 					}
 				}
+				, topBar: {
+    title: {
+      text: 'TodayShedule',
+      color: 'white'
+    }
+				  }
 			}
 		}
 	})
@@ -56,6 +68,12 @@ About=()=>{
 						visible:false						
 					}
 				}
+				, topBar: {
+    title: {
+      text: 'About',
+      color: 'white'
+    }
+				  }
 			}
 		}
 	})
@@ -74,6 +92,12 @@ Login=()=>{
 						visible:false						
 					}
 				}
+				, topBar: {
+    title: {
+      text: 'Login',
+      color: 'white'
+    }
+				  }
 			}
 		}
 	})
@@ -91,6 +115,12 @@ Registration=()=>{
 						visible:false						
 					}
 				}
+				, topBar: {
+    title: {
+      text: 'Registration',
+      color: 'white'
+    }
+				  }
 			}
 		}
 	})
@@ -107,7 +137,14 @@ Contact=()=>{
 					left:{
 						visible:false						
 					}
-				}
+				},
+				  topBar: {
+    title: {
+      text: 'Contact',
+      color: 'white'
+    }
+				  }
+				   
 			}
 		}
 	})
@@ -123,7 +160,7 @@ render(){
 
  <View style={{flex:1,backgroundColor:'white',margin:20}}>
     
-<Text onPress={this.Program} style={{margin:5}} >Our Programs</Text>
+<Text onPress={this.Program} style={{margin:5,fontWeight:'bold'}} >Our Programs</Text>
 <Text onPress={this.Shedule} style={{margin:5}} >
 Today's Schedule
 </Text>
