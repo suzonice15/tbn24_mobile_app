@@ -43,8 +43,8 @@ sideMenuShow=()=>{
   return ( 
   
   
-    <ScrollView>  
-  <View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}}>  
+    <View>  
+  <View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}}>  
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
 	
 	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
@@ -52,6 +52,9 @@ sideMenuShow=()=>{
 	
 	</TouchableHighlight>
 	</View>  
+	
+	
+	<ScrollView style={{marginTop:100}} >
   <View style={{backgroundColor:'white',borderColor: 'black',
       borderWidth:1,margin:5}} >  
   <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'center',borderBottomWidth:1,paddingBottom:10}}>
@@ -87,9 +90,94 @@ Password </Text>
       borderWidth: 2,backgroundColor:'red',textAlignVertical: 'top',}} />	  
 	  </View>  
   </View>
- 
- 
   </ScrollView>
+  
+   
+  <Text></Text>
+  <Text></Text>
+  <Text></Text>
+  <Text></Text>
+   <Text></Text>
+  <Text></Text>
+  <Text></Text>
+  <Text></Text>
+  <Text></Text>
+  
+  
+		<View style={{flex:9,position:'absolute',color:'white',bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
+	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={()=>{
+
+		Navigation.push(this.props.componentId, {
+			component: {
+				name: 'HomePage', // Push the screen registered with the 'Settings' key
+				options: { // Optional options object to configure the screen
+					topBar: {
+						title: {
+							text: 'Home' // Set the TopBar title of the new Screen
+						}
+					}
+				}
+			}
+		})
+	}}>
+
+<Image    source={require('../images/live.png')} />
+</TouchableHighlight>
+
+
+	<Text style={{color:'white'}} >Live</Text>
+
+	</View>
+	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={()=>{
+
+		Navigation.push(this.props.componentId, {
+			component: {
+				name: 'ProgramPage', // Push the screen registered with the 'Settings' key
+				options: { // Optional options object to configure the screen
+					topBar: {
+						title: {
+							text: 'Program' // Set the TopBar title of the new Screen
+						}
+					}
+				}
+			}
+		})
+	}}>
+<Image   source={require('../images/program.png')} />
+</TouchableHighlight>
+
+<Text style={{color:'white'}} >Programs</Text>
+
+	</View>
+	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={()=>{
+
+		Navigation.push(this.props.componentId, {
+			component: {
+				name: 'VideoPage', // Push the screen registered with the 'Settings' key
+				options: { // Optional options object to configure the screen
+					topBar: {
+						title: {
+							text: 'Videos' // Set the TopBar title of the new Screen
+						}
+					}
+				}
+			}
+		})
+	}}>
+<Image     source={require('../images/youtube.png')} />
+</TouchableHighlight>
+
+<Text style={{color:'white'}} >Videos</Text>
+
+	</View>
+
+	</View>
+ 
+ 
+  </View>
      
   );
 	}

@@ -98,6 +98,10 @@ Login=()=>{
       color: 'white'
     }
 				  }
+				  ,
+				    bottomTab: {
+    text: 'Settings'
+  }
 			}
 		}
 	})

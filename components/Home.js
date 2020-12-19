@@ -78,7 +78,7 @@ sideMenuShow=()=>{
   
   
     <ScrollView>  
-  <View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}}>  
+  <View style={{flex:1,flexDirection:'row',marginTop:0, backgroundColor:'#B10000'}}>  
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
 	
 	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
@@ -99,13 +99,100 @@ sideMenuShow=()=>{
    paused={false}
    muted={false}
    bufferTime={1}
-   maxBufferTime={100}
+   maxBufferTime={1}
    resizeMode={"contain"}
    onLoading={()=>{}}
    onLoad={()=>{}}
    onEnd={()=>{}}
 />
  </View> 
+ 
+ <Text></Text>
+ <Text></Text>
+ <Text></Text>
+ <Text></Text>
+ <Text></Text>
+ <Text></Text>
+  
+ <Text></Text>
+ <Text></Text>
+ <Text></Text>
+ <Text></Text>
+ <Text></Text>
+ <Text></Text>
+ 
+ <View style={{flex:9,position:'absolute',color:'white',marginTop:50,bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
+	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={()=>{
+
+		Navigation.push(this.props.componentId, {
+			component: {
+				name: 'HomePage', // Push the screen registered with the 'Settings' key
+				options: { // Optional options object to configure the screen
+					topBar: {
+						title: {
+							text: 'Home' // Set the TopBar title of the new Screen
+						}
+					}
+				}
+			}
+		})
+	}}>
+
+<Image    source={require('../images/live.png')} />
+</TouchableHighlight>
+
+
+	<Text style={{color:'white'}} >Live</Text>
+
+	</View>
+	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={()=>{
+
+		Navigation.push(this.props.componentId, {
+			component: {
+				name: 'ProgramPage', // Push the screen registered with the 'Settings' key
+				options: { // Optional options object to configure the screen
+					topBar: {
+						title: {
+							text: 'Program' // Set the TopBar title of the new Screen
+						}
+					}
+				}
+			}
+		})
+	}}>
+<Image   source={require('../images/program.png')} />
+</TouchableHighlight>
+
+<Text style={{color:'white'}} >Programs</Text>
+
+	</View>
+	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={()=>{
+
+		Navigation.push(this.props.componentId, {
+			component: {
+				name: 'VideoPage', // Push the screen registered with the 'Settings' key
+				options: { // Optional options object to configure the screen
+					topBar: {
+						title: {
+							text: 'Videos' // Set the TopBar title of the new Screen
+						}
+					}
+				}
+			}
+		})
+	}}>
+<Image     source={require('../images/youtube.png')} />
+</TouchableHighlight>
+
+<Text style={{color:'white'}} >Videos</Text>
+
+	</View>
+
+	</View>
+
    
   </ScrollView>
      

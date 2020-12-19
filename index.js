@@ -35,7 +35,7 @@ Navigation.setDefaultOptions({
   bottomTab: {
     fontSize: 14,
     selectedFontSize: 14,
-	backgroundColor:''
+	backgroundColor:'red'
   }
 });
 
