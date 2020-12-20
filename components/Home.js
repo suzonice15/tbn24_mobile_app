@@ -99,7 +99,7 @@ sideMenuShow=()=>{
    paused={false}
    muted={false}
    bufferTime={1}
-   maxBufferTime={1}
+   maxBufferTime={300}
    resizeMode={"contain"}
    onLoading={()=>{}}
    onLoad={()=>{}}

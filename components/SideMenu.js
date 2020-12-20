@@ -165,16 +165,16 @@ render(){
  <View style={{flex:1,backgroundColor:'white',margin:20}}>
     
 <Text onPress={this.Program} style={{margin:5,fontWeight:'bold'}} >Our Programs</Text>
-<Text onPress={this.Shedule} style={{margin:5}} >
+<Text onPress={this.Shedule} style={{margin:5,fontWeight:'bold'}} >
 Today's Schedule
 </Text>
-<Text  onPress={this.About} style={{margin:5}} >ABOUT US</Text>
-<Text onPress={this.Contact} style={{margin:5}} >Contact  Us</Text>
+<Text  onPress={this.About} style={{margin:5,fontWeight:'bold'}} >ABOUT US</Text>
+<Text onPress={this.Contact} style={{margin:5,fontWeight:'bold'}} >Contact  Us</Text>
 
-<Text onPress={this.Login}  style={{margin:5}} >Login</Text>
-<Text onPress={this.Registration} style={{margin:5}} >Registration</Text>
-<Text  style={{margin:5}} >Video</Text>
-<Text  style={{margin:5}} >Blog</Text>
+<Text onPress={this.Login}  style={{margin:5,fontWeight:'bold'}} >Login</Text>
+<Text onPress={this.Registration} style={{margin:5,fontWeight:'bold'}} >Registration</Text>
+<Text style={{margin:5,fontWeight:'bold'}} >Video</Text>
+<Text  style={{margin:5,fontWeight:'bold'}}>Blog</Text>
 
             </View>
 
