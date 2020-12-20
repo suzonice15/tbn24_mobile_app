@@ -15,6 +15,7 @@ import {
   Text,
   FlatList,
   StatusBar,
+  Alert,
   Button,
   TouchableHighlight,
   TextInput
@@ -26,7 +27,67 @@ import {
 
 class Registration  extends Component {
 	
-	 
+
+ constructor(props){
+		 super(props)
+	 this.state={
+		 name:'',
+		 email:'',
+		 phone:'',
+		 password:'',
+		 message:''
+		 
+	 }
+	 }
+	 dataStore=()=>{
+		 
+		 if(this.state.name==""){
+			  Alert.alert('Enter Your Name')
+			 return false;
+		 }
+		  if(this.state.email==""){
+			  Alert.alert('Enter Your Email')
+			 return false;
+		 }
+		 
+		 let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (reg.test(this.state.email) === false) {
+    	  Alert.alert('Enter Valid Email')
+     
+    return false;
+  }
+		  if(this.state.phone==""){
+			  Alert.alert('Enter Your phone')
+			 return false;
+		 }
+		  if(this.state.password==""){
+			  Alert.alert('Enter Your password')
+			 return false;
+		 }
+		 
+		 let URL='https://www.tbn24.com/api/registration/store';
+		 let configHeader={
+			 Accept:'application/json',
+			 'Content-Type':'application/json'
+		 }
+		 let configBody=JSON.stringify({
+			 name:this.state.name,
+			 email:this.state.email,
+			 phone:this.state.phone,
+			 password:this.state.password
+			 
+		 });
+		 let config={method:'POST',headers:configHeader,body:configBody}
+		 fetch(URL,config).then((response)=>response.text())
+		 .then((responsData)=>{
+ 			
+			 
+			    Alert.alert(responsData)
+		 }).catch((erorr)=>{
+			 Alert.alert('Something is Wrong')
+		 })
+		 
+	 }	 
 sideMenuShow=()=>{	
  		Navigation.mergeOptions(this.props.componentId,{			
 			sideMenu:{
@@ -62,6 +123,7 @@ Registration Form</Text>
  Full Name  </Text>
  
  <TextInput
+ onChangeText={(value)=>this.setState({name:value})}
         style={{ margin: 15,
       height: 50,fontSize:20,
       borderColor: 'black',
@@ -74,6 +136,7 @@ Registration Form</Text>
  </Text>
  
  <TextInput
+ onChangeText={(value)=>this.setState({email:value})}
         style={{ margin: 15,
       height: 50,fontSize:20,
       borderColor: 'black',
@@ -87,6 +150,7 @@ Registration Form</Text>
  Phone   </Text>
  
  <TextInput
+ onChangeText={(value)=>this.setState({phone:value})}
         style={{ margin: 15,
       height: 50,fontSize:20,
       borderColor: 'black',
@@ -101,6 +165,9 @@ Password </Text>
  
 	  
 	   <TextInput
+	   
+	   secureTextEntry={true}
+	   onChangeText={(value)=>this.setState({password:value})}
         style={{ fontSize:20,margin: 15,
       height: 50,
       borderColor: 'black',
@@ -110,7 +177,7 @@ Password </Text>
       /> 
 	   
 	  <View style={{backgroundColor:'red',width:'93%',  marginBottom:15,marginLeft:15,marginTop: 5}} >  
-    <Button title="Registration Now" style={{fontSize:20,borderColor: 'black',
+    <Button onPress={this.dataStore}  title="Registration Now" style={{fontSize:20,borderColor: 'black',
       borderWidth: 2,backgroundColor:'red',textAlignVertical: 'top',}} />
 	  
 	  </View>

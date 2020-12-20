@@ -16,6 +16,7 @@ import {
   FlatList,
   StatusBar,
   Button,
+  Alert,
   TouchableHighlight,
   TextInput
 } from 'react-native';
@@ -26,7 +27,38 @@ import {
 
 class Contact  extends Component {
 	
-	 
+	 constructor(props){
+		 super(props)
+	 this.state={
+		 name:'',
+		 email:'',
+		 subject:'',
+		 message:''
+		 
+	 }
+	 }
+	 contactStore=()=>{
+		 let URL='https://www.tbn24.com/api/contact/store';
+		 let configHeader={
+			 Accept:'application/json',
+			 'Content-Type':'application/json'
+		 }
+		 let configBody=JSON.stringify({
+			 contact_name:this.state.name,
+			 contact_email:this.state.email,
+			 contact_subject:this.state.subject,
+			 contact_message:this.state.message
+			 
+		 });
+		 let config={method:'POST',headers:configHeader,body:configBody}
+		 fetch(URL,config).then((response)=>response.text())
+		 .then((responsData)=>{
+ 			  Alert.alert(responsData)
+		 }).catch((erorr)=>{
+			 Alert.alert('Something is Wrong')
+		 })
+		 
+	 }
 
 sideMenuShow=()=>{	
  		Navigation.mergeOptions(this.props.componentId,{			
@@ -57,8 +89,9 @@ sideMenuShow=()=>{
   <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
 Contact With Us
 </Text>
+
  
- <TextInput
+ <TextInput onChangeText={(value)=>this.setState({name:value})}
         style={{ margin: 15,
       height: 50,fontSize:20,
       borderColor: 'black',
@@ -69,6 +102,8 @@ Contact With Us
 	  
 	  
 	   <TextInput
+	   
+	   onChangeText={(value)=>this.setState({email:value})}
         style={{ fontSize:20,margin: 15,
       height: 50,
       borderColor: 'black',
@@ -77,6 +112,7 @@ Contact With Us
          
       />
 	   <TextInput
+	   onChangeText={(value)=>this.setState({subject:value})}
         style={{ fontSize:20,margin: 15,
       height: 50,
       borderColor: 'black',
@@ -84,8 +120,9 @@ Contact With Us
         placeholder="Subject Name"
          
       />
-	  
+	 
 	  <TextInput
+	  onChangeText={(value)=>this.setState({message:value})}
     multiline={true}
 	 placeholder="Enter Your Message"
     numberOfLines={10}
@@ -94,7 +131,7 @@ Contact With Us
 	  
 	  
 	  <View style={{backgroundColor:'red',width:'93%', margin: 15}} >  
-    <Button title="Send Message" style={{fontSize:20,borderColor: 'black',
+    <Button onPress={this.contactStore} title="Send Message" style={{fontSize:20,borderColor: 'black',
       borderWidth: 2,backgroundColor:'red',textAlignVertical: 'top',}} />
 	  
 	  </View>
