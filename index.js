@@ -8,6 +8,7 @@ import Contact from "./components/Contact";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
 import LeftSideMenu from "./components/SideMenu";
+import SingleProgram from "./components/SingleProgram";
 Navigation.registerComponent('ProgramPage', () => Program);
 Navigation.registerComponent('TodayShedulePage', () => TodayShedule);
 Navigation.registerComponent('AboutPage', () => About);
@@ -16,6 +17,7 @@ Navigation.registerComponent('RegistrationPage', () => Registration);
 Navigation.registerComponent('ContactPage', () => Contact);
 Navigation.registerComponent('HomePage', () => Home);
 Navigation.registerComponent('SideMenuPage', () => LeftSideMenu);
+Navigation.registerComponent('SingleProgramPage', () => SingleProgram);
 
 Navigation.setDefaultOptions({
   statusBar: {

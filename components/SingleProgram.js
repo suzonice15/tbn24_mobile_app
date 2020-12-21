@@ -18,7 +18,7 @@ import {
  import { Navigation } from "react-native-navigation";
 
 
-class Program  extends Component {
+class SingleProgram  extends Component {
 	
 	
 	constructor(props){
@@ -44,7 +44,7 @@ class Program  extends Component {
 		
 		this.setState({refressicon:true});
 
-		let URL="https://www.tbn24.com/api/program";
+		let URL="https://www.tbn24.com/api/program/"+this.props.program_id;
 		let config={method:'GET'}
 		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
 	 			this.setState({Data:response,loading:false,refressicon:false});
@@ -77,33 +77,10 @@ class Program  extends Component {
 	
 	
 	   
-	 ChildView=({program_details,program_id,program_name,program_image})=>{
+	 ChildView=({program_id,program_name,program_image})=>{
 		 return(
 		   <View>
-		 <TouchableHighlight 
-		  onPress={()=>{
-
-		Navigation.push(this.props.componentId, {
-			component: {
-				name: 'SingleProgramPage', // Push the screen registered with the 'Settings' key
-				options: { // Optional options object to configure the screen
-					topBar: {
-						title: {
-							text: `${program_name}` // Set the TopBar title of the new Screen
-						}
-					}
-				},
-				    passProps: {
-      program_id:  `${program_id}`,
-      programName:  `${program_name}`,
-      programDescription:  `${program_details}`,
-      program_image:  `${program_image}`,
-      
-    }
-			}
-		})
-	}}
-		 >
+		 <TouchableHighlight>
 		 <View style={{flexDirection:'column',backgroundColor:'#B10000',width:190,margin:5}}>
 		  <View>
 		 
@@ -159,14 +136,66 @@ class Program  extends Component {
             
 	   <ScrollView style={{marginTop:90,height:'80%'}} >  
 
-   <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
-Our Programs
-</Text> 
+   <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
+	   {this.props.programName}
+	   
+	   
+	   </Text> 
+	   <View style={{ margin:10}}>
+	   <Image style={{width:'100%',height:250}} source={{uri:'https://www.tbn24.com/public/uploads/program/'+this.props.program_image}} />
+	   
+	  
+	   <Text style={{fontSize:18,color:'black',textAlign:'center',marginTop:5}}>
+	   {this.props.programDescription}
+ 	   
+	   </Text> 
+	   	</View>
+		
+		 <View style={{ margin:10,borderColor:'red',borderWidth:1}}>
+	  
+	  <Text style={{color:'white',padding:10,fontSize:20,textAlign:'center',backgroundColor:'red'}}>
+	   Weekly Schedule List 
+	  </Text>
+	  		 <View style={{ flex:9,flexDirection:'row',textAlign:'center',justifyContent:'center',marginTop:5,marginLeft:5,marginRight:5}}>
+
+            <View style={{ flex:2,borderWidth:1,borderColor:'red',textAlign:'center',}}>
+<Text style={{ padding:5}} >Date</Text>
+           </View>
+		   <View style={{ flex:3,borderWidth:1,borderColor:'red'}}>
+<Text style={{ padding:5}} >Day</Text>
+           </View>
+		   <View style={{ flex:4,borderWidth:1,borderColor:'red'}}>
+<Text style={{ padding:5}}>Show Time</Text>
+           </View>
+           </View>
+		   
+		   
+			
+			 {this.state.Data.map((program) => {
+        return  <View style={{ flex:9,flexDirection:'row',marginLeft:5,marginRight:5,marginTop:0}}>
+			
+            <View style={{ flex:2,borderWidth:1,borderColor:'red'}}>
+<Text style={{ padding:5}} >{program.schedule_date}</Text>
+           </View>
+		   <View style={{ flex:3,borderWidth:1,borderColor:'red'}}>
+<Text style={{ padding:5}} >{program.day}</Text>
+           </View>
+		   <View style={{ flex:4,borderWidth:1,borderColor:'red'}}>
+<Text style={{ padding:5}}>{program.start_time}-{program.end_time}</Text>
+           </View> 
+		   
+	     	</View> 
+      })}
+	  <Text></Text>
+	  <Text></Text>
+ 
+	  
+	   	</View>
+		
+		
  
 
- 
- <FlatList onRefresh={()=>this.PullRefresh()} refreshing={this.state.refressicon} numColumns={2} data={this.state.Data}   keyExtractor={item =>item.id.toString()} renderItem={({item})=><this.ChildView program_details={item.program_details} program_id={item.id} program_name={item.program_name} program_image={item.program_image}   />} />
-     
+   
        </ScrollView>    
 	   
 	   	<Text></Text>
@@ -270,4 +299,4 @@ const styles = StyleSheet.create({
    
 });
 
-export default Program;
+export default SingleProgram;

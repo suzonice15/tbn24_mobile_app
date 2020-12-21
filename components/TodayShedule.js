@@ -68,10 +68,36 @@ sideMenuShow=()=>{
 	}
 
  
-	 ChildView=({program_name,schedule_date,img,start_time})=>{
+	 ChildView=({program_name,program_details,program_id,schedule_date,img,start_time})=>{
 
 		 return(
-		 		   <View>
+		 
+		 		  
+				    <View>
+		 <TouchableHighlight 
+		  onPress={()=>{
+
+		Navigation.push(this.props.componentId, {
+			component: {
+				name: 'SingleProgramPage', // Push the screen registered with the 'Settings' key
+				options: { // Optional options object to configure the screen
+					topBar: {
+						title: {
+							text: `${program_name}` // Set the TopBar title of the new Screen
+						}
+					}
+				},
+				    passProps: {
+      program_id:  `${program_id}`,
+      programName:  `${program_name}`,
+      programDescription:  `${program_details}`,
+      program_image:  `${img}`,
+      
+    }
+			}
+		})
+	}}
+		 >
 
 		 <View style={{flexDirection:'row',backgroundColor:'white',border:2,borderColor:'black', margin:3,flex:100}}>
 		   
@@ -95,8 +121,10 @@ sideMenuShow=()=>{
 		  
 		 </View>
 		 
+
 	
 		 </View>
+		 		 </TouchableHighlight>
 		 </View>
 		 )
 	 }
@@ -141,7 +169,7 @@ Today's Schedule
 </Text>
   
  
- <FlatList data={this.state.Data}  onRefresh={()=>this.PullRefresh()} refreshing={this.state.refressicon}   keyExtractor={item => item.id} renderItem={({item})=><this.ChildView start_time={item.start_time} program_name={item.program_name} img={item.program_image} schedule_date={item.schedule_date} />} />
+ <FlatList data={this.state.Data}  onRefresh={()=>this.PullRefresh()} refreshing={this.state.refressicon}   keyExtractor={item => item.id} renderItem={({item})=><this.ChildView program_id={item.program_id} program_details={item.program_details} start_time={item.start_time} program_name={item.program_name} img={item.program_image} schedule_date={item.schedule_date} />} />
   
   </ScrollView>
   		 	 <Text></Text>
