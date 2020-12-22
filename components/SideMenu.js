@@ -131,7 +131,6 @@ Registration=()=>{
 }
 Contact=()=>{
 	
-	
 	Navigation.push('CenterScreen',{
 		
 		component:{
@@ -145,6 +144,53 @@ Contact=()=>{
 				  topBar: {
     title: {
       text: 'Contact',
+      color: 'white'
+    }
+				  }
+				   
+			}
+		}
+	})
+} 
+
+Blog=()=>{
+	
+	Navigation.push('CenterScreen',{
+		
+		component:{
+			name:"BlogPage",
+			options:{
+				sideMenu:{
+					left:{
+						visible:false						
+					}
+				},
+				  topBar: {
+    title: {
+      text: 'Blog',
+      color: 'white'
+    }
+				  }
+				   
+			}
+		}
+	})
+} 
+Video=()=>{
+	
+	Navigation.push('CenterScreen',{
+		
+		component:{
+			name:"VideoPage",
+			options:{
+				sideMenu:{
+					left:{
+						visible:false						
+					}
+				},
+				  topBar: {
+    title: {
+      text: 'Video',
       color: 'white'
     }
 				  }
@@ -171,10 +217,11 @@ Today's Schedule
 <Text  onPress={this.About} style={{margin:5,fontWeight:'bold'}} >ABOUT US</Text>
 <Text onPress={this.Contact} style={{margin:5,fontWeight:'bold'}} >Contact  Us</Text>
 
+
 <Text onPress={this.Login}  style={{margin:5,fontWeight:'bold'}} >Login</Text>
 <Text onPress={this.Registration} style={{margin:5,fontWeight:'bold'}} >Registration</Text>
-<Text style={{margin:5,fontWeight:'bold'}} >Video</Text>
-<Text  style={{margin:5,fontWeight:'bold'}}>Blog</Text>
+<Text  onPress={this.Video}  style={{margin:5,fontWeight:'bold'}} >Videos</Text>
+<Text    onPress={this.Blog}  style={{margin:5,fontWeight:'bold'}}>Blog</Text>
 
             </View>
 

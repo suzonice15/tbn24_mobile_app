@@ -5,6 +5,7 @@
  * @format
  * @flow strict-local
  */
+import { Navigation } from "react-native-navigation";
 
 import React,{Component} from 'react';
 import {
@@ -15,40 +16,62 @@ import {
   Text,
   FlatList,
   StatusBar,
-  Button,
   Alert,
+  TextInput,
   TouchableHighlight,
-  TextInput
+  Button
 } from 'react-native';
- import Video from 'react-native-video';
- import {LivePlayer} from "react-native-live-stream";
- import { Navigation } from "react-native-navigation";
-
-
-class Contact  extends Component {
+  class SingleBlog  extends Component {
 	
 	 constructor(props){
-		 super(props)
-	 this.state={
-		 name:'',
-		 email:'',
-		 subject:'',
+		
+		super(props);
+		Navigation.events().bindComponent(this)
+
+		this.state={
+		 comments:[],
+ 		 name:'',
+		 email:'',		
+		 post_id:'',
 		 message:''
+		}
+	}
+	 
+	 
+	 mainCommentStore=()=>{	 
+	
 		 
-	 }
-	 }
-	 contactStore=()=>{
-		 let URL='https://www.tbn24.com/api/contact/store';
+		 if(this.state.message==""){
+			  Alert.alert('Enter Your Comment')
+			 return false;
+		 }
+		 
+		 if(this.state.name==""){
+			  Alert.alert('Enter Your Name')
+			 return false;
+		 }
+		  if(this.state.email==""){
+			  Alert.alert('Enter Your Email')
+			 return false;
+		 }
+		 
+		 let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (reg.test(this.state.email) === false) {
+    	  Alert.alert('Enter Valid Email')
+     
+    return false;
+  }
+		 
+		 let URL='https://www.tbn24.com/api/mainComment/store';
 		 let configHeader={
 			 Accept:'application/json',
 			 'Content-Type':'application/json'
 		 }
 		 let configBody=JSON.stringify({
-			 contact_name:this.state.name,
-			 contact_email:this.state.email,
-			 contact_subject:this.state.subject,
-			 contact_message:this.state.message
-			 
+			 name:this.state.name,
+			 email:this.state.email,
+			 post_id:this.state.post_id,
+			 comments:this.state.message			 
 		 });
 		 let config={method:'POST',headers:configHeader,body:configBody}
 		 fetch(URL,config).then((response)=>response.text())
@@ -60,38 +83,73 @@ class Contact  extends Component {
 		 
 	 }
 
-sideMenuShow=()=>{	
+	
+	  
+	   componentDidMount=()=>{
+		
+	 let URL="https://www.tbn24.com/api/selectBlogComment/"+this.props.post_id;
+		let config={method:'GET'}
+		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
+	 			this.setState({comments:response});
+		}).catch((error)=>{			 
+			Alert.alert("Internet Problem"); 
+		});
+		
+		
+		this.setState({
+			post_id:this.props.post_id,
+			name:"anisur rohman",
+		email:"anisur@gmail.com"
+			})
+		
+	 
+	}
+	
+	sideMenuShow=()=>{	
  		Navigation.mergeOptions(this.props.componentId,{			
 			sideMenu:{
 				left:{
 					visible:true
 				}
 			}
-		});
-	
-	}	
+		});	
+	}
+ 
+	 
 	
 	render(){
-  return ( 
-  
-  
-    <View>  
-  <View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}}>  
+  return (  
+      <View>
+  <View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}} >
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	
-	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
-	
+<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
+	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />	
 	</TouchableHighlight>
-	</View> 
-	 
-  <ScrollView style={{marginTop:100,height:'85%'}} >  
-  <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
-Contact With Us
-</Text>
+	</View>
+	<ScrollView style={{marginTop:80,marginBottom:80}}>
+   
+<View style={{margin:5,flex:1,flexDirection:'column'}}>
 
- 
- <TextInput onChangeText={(value)=>this.setState({name:value})}
+
+<View style={{margin:2,flex:1}}>
+  
+		 
+<Image style={{width:'100%',height:260}}  source={{uri:'https://www.tbn24.com/public/uploads/post/'+this.props.post_picture}} />
+<View style={{backgroundColor:'#ddd',marginBottom:20,padding:10}}>
+
+ <Text style={{color:'color',fontSize:20,textAlign:'left'}} >{this.props.post_title}   </Text>
+<Text style={{color:'color',fontSize:18,textAlign:'center'}} >{this.props.post_created_date}
+      |  Viewed: {this.props.post_view} </Text>
+<Text style={{color:'color',fontSize:16,textAlign:'left'}}>{this.props.post_description.replace(/(<([^>]+)>)/gi, "")}
+</Text>
+</View>
+</View>
+</View>
+
+<View style={{margin:5,flex:1}}>
+
+<TextInput
+onChangeText={(value)=>this.setState({name:value})}
         style={{ margin: 15,
       height: 50,fontSize:20,
       borderColor: 'black',
@@ -99,93 +157,66 @@ Contact With Us
         placeholder="Enter Your Name"
          
       />
-	  
-	  
-	   <TextInput
-	   
-	   onChangeText={(value)=>this.setState({email:value})}
-        style={{ fontSize:20,margin: 15,
-      height: 50,
+	  <TextInput
+	  onChangeText={(value)=>this.setState({email:value})}
+        style={{ margin: 15,
+      height: 50,fontSize:20,
       borderColor: 'black',
       borderWidth: 2}}
         placeholder="Enter Your Email"
          
       />
-	   <TextInput
-	   onChangeText={(value)=>this.setState({subject:value})}
-        style={{ fontSize:20,margin: 15,
-      height: 50,
-      borderColor: 'black',
-      borderWidth: 2}}
-        placeholder="Subject Name"
-         
-      />
-	 
 	  <TextInput
 	  onChangeText={(value)=>this.setState({message:value})}
     multiline={true}
-	 placeholder="Enter Your Message"
+	 placeholder="Enter Your Comment"
     numberOfLines={10}
     style={{fontSize:20, margin: 15,height:200,   borderColor: 'black',
       borderWidth: 2,textAlignVertical: 'top',}}/>
+	  <Button  onPress={this.mainCommentStore} title="Submit Now" ></Button> 
 	  
+	  <View style={{margin:5}}>
+
+		  {this.state.comments.map((row)=>
+	   <View style={{padding:5}}>	
+	   
+	   <Text style={{fontSize:20,color:'black'}}>{row.name}</Text>
+	   <Text>{row.comments} </Text>
+	   
+	     {
+			 (typeof(row.sub_comment)=='object')?
+			 
+			  row.sub_comment.map((sub)=><View style={{paddingLeft:20}}>	   
 	  
-	  <View style={{backgroundColor:'red',width:'93%', margin: 15}} >  
-    <Button onPress={this.contactStore} title="Send Message" style={{fontSize:20,borderColor: 'black',
-      borderWidth: 2,backgroundColor:'red',textAlignVertical: 'top',}} />
+	  <Text style={{fontSize:20,color:'black'}}>{sub.name}</Text>
+	   <Text>{sub.comments} </Text>
+	   
+	   
+		</View>)
+		  :null
+		}
+	   
+	   
+	   </View>
+		  )}
+	   
+	   
 	  
 	  </View>
 	  
-	  <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
-Contact info 
-</Text>
-
- 
-	  <View style={{backgroundColor:'white',flex:100, margin: 15,borderColor: 'black',
-      borderWidth: 1}} > 
 	  
-	  <View style={{backgroundColor:'white',borderBottomWidth:1,padding:10}} > 
-	    <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'left'}}>
-Contact info 
-</Text>
 
- <Text style={{fontSize:20,color:'black',fontWeight:'normal',textAlign:'left'}}>
-37-19, 57th street
-woodside,NY-11377 United States 
-</Text>
- </View>   
-   
-	  <View style={{backgroundColor:'white',borderBottomWidth:1,padding:10}} > 
-	    <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'left'}}>
-Email
-</Text>
+</View>
 
- <Text style={{fontSize:20,color:'black',fontWeight:'normal',textAlign:'left'}}>
- info@tban24.com 
-</Text>
- </View> 
-   
-	  <View style={{backgroundColor:'white',borderBottomWidth:1,padding:10}} > 
-	    <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'left'}}>
-Hotline </Text>
 
- <Text style={{fontSize:20,color:'black',fontWeight:'normal',textAlign:'left'}}>
- +1(718)808-9000 
-</Text>
- </View>  
- 
- <Text></Text>
- <Text></Text>
- <Text></Text>
- <Text></Text>
- <Text></Text>
-     
-	  </View>	  
-  
-  </ScrollView>
 
-  
-  <View style={{flex:9,position:'absolute',color:'white',bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
+
+
+	</ScrollView>
+
+
+	 
+		<View style={{flex:9,position:'absolute',color:'white',bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
 	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
@@ -279,4 +310,4 @@ const styles = StyleSheet.create({
    
 });
 
-export default Contact;
+export default SingleBlog;

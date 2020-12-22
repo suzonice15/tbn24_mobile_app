@@ -86,7 +86,7 @@ sideMenuShow=()=>{
 	
 	</TouchableHighlight>
 	</View>
-	 <View style={{backgroundColor:'#383838'}}>
+	 <View style={{backgroundColor:'#383838',margin:5}}>
 		
 		<LivePlayer source={{uri:this.state.video}}
 		 
@@ -204,7 +204,8 @@ const styles = StyleSheet.create({
 	 
    backgroundVideo: {
     position: 'relative',
-	height:300    
+	height:300 ,
+marginTop:2	
   },
   logo:{
 		width:300,

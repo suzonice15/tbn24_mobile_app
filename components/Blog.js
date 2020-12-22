@@ -20,18 +20,16 @@ import {
   TouchableHighlight,
   Button
 } from 'react-native';
- import Video from 'react-native-video';
- import {LivePlayer} from "react-native-live-stream";
- 
-
-class About  extends Component {
+  class Blog  extends Component {
 	
 	 constructor(props){
 		
 		super(props);
 		Navigation.events().bindComponent(this)
-		 this.state={
-			about:'',
+
+		this.state={
+			Data:'',
+ 			
 		}
 	}
 	 
@@ -40,10 +38,10 @@ class About  extends Component {
 	  
 	   componentDidMount=()=>{
 		
-	 let URL="https://www.tbn24.com/api/about";
+	 let URL="https://www.tbn24.com/api/blogs";
 		let config={method:'GET'}
 		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
-	 			this.setState({about:response.replace(/(<([^>]+)>)/gi, "")});
+	 			this.setState({Data:response});
 		}).catch((error)=>{
 			 
 			Alert.alert("Internet Problem"); 
@@ -61,45 +59,79 @@ class About  extends Component {
 			}
 		});	
 	}
+ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_description,post_view})=>{
+		 return(	
+<View style={{margin:2,flex:1}}>
+ <TouchableHighlight 
+		  onPress={()=>{
 
+		Navigation.push(this.props.componentId, {
+			component: {
+				name: 'SingleBlogPage', // Push the screen registered with the 'Settings' key
+				options: { // Optional options object to configure the screen
+					topBar: {
+						title: {
+							text: `${post_title}` // Set the TopBar title of the new Screen
+						}
+					}
+				},
+				    passProps: {
+      post_id:  `${post_id}`,
+      post_name:  `${post_name}`,
+      post_title:  `${post_title}`,
+      post_description:  `${post_description}`,
+      post_picture:  `${post_picture}`,
+      post_created_date:  `${post_created_date}`,
+      post_view:  `${post_view}`,
+      
+    }
+			}
+		})
+	}}
+		 >
+		 <View>
+<Image style={{width:'100%',height:260}}  source={{uri:'https://www.tbn24.com/public/uploads/post/'+post_picture}} />
+<View style={{backgroundColor:'#ddd',marginBottom:20,padding:10}}>
+<Text style={{color:'color',fontSize:20,textAlign:'left'}} >{post_title}</Text>
+<Text style={{color:'color',fontSize:18,textAlign:'center'}} >{post_created_date}
+      |  Viewed: {post_view} </Text>
+<Text style={{color:'color',fontSize:16,textAlign:'left'}}>{post_description.replace(/(<([^>]+)>)/gi, "").substring(0, 160)}.....
+</Text>
+</View>
+ </View>
+</TouchableHighlight>
+
+</View>
+		 
+)}
 	 
 	
 	render(){
-  return ( 
-  
-  
-    <View>
-
+  return (  
+      <View>
   <View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}} >
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
 <TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
-	
+	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />	
 	</TouchableHighlight>
 	</View>
-	<ScrollView style={{marginTop:80}}>
-   <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
-ABOUT US
-</Text>
+	<ScrollView style={{marginTop:80,marginBottom:80}}>
+   
+<View style={{margin:5,flex:1,flexDirection:'column'}}>
 
 
-<Text style={{textAlign:'left',paddingLeft:10,color:'black',margin:8,fontSize:19}}>
 
-	{this.state.about}
 
-	</Text>
+ 
+ <FlatList  numColumns={1} data={this.state.Data}   keyExtractor={item =>item.post_id.toString()} renderItem={({item})=><this.ChildView post_id={item.post_id} post_title={item.post_title} post_name={item.post_name} post_picture={item.post_picture} post_description={item.post_description} post_created_date={item.post_created_date} post_view={item.post_view}   />} />
+
+</View>
+
+
 	</ScrollView>
 
 
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-
+	 
 		<View style={{flex:9,position:'absolute',color:'white',bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
 	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
@@ -194,4 +226,4 @@ const styles = StyleSheet.create({
    
 });
 
-export default About;
+export default Blog;

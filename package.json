@@ -14,7 +14,8 @@
     "react-native": "0.63.4",
     "react-native-live-stream": "^1.0.1",
     "react-native-navigation": "^7.6.0",
-    "react-native-video": "^5.1.0-alpha8"
+    "react-native-video": "^5.1.0-alpha8",
+    "react-native-youtube": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

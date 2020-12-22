@@ -20,18 +20,18 @@ import {
   TouchableHighlight,
   Button
 } from 'react-native';
- import Video from 'react-native-video';
- import {LivePlayer} from "react-native-live-stream";
- 
-
-class About  extends Component {
+ import Video from 'react-native-video';  
+import YouTube from 'react-native-youtube';
+class Videos  extends Component {
 	
 	 constructor(props){
 		
 		super(props);
 		Navigation.events().bindComponent(this)
-		 this.state={
+
+		this.state={
 			about:'',
+ 			
 		}
 	}
 	 
@@ -85,21 +85,24 @@ ABOUT US
 
 <Text style={{textAlign:'left',paddingLeft:10,color:'black',margin:8,fontSize:19}}>
 
-	{this.state.about}
+	<YouTube
+	apiKey='AIzaSyAEcAvRfkqGYHQMm9neonaCzkxaIttEoxo'
+  videoId="KVZ-P-ZI6W4" // The YouTube video ID
+  play // control playback of video with true/false
+  fullscreen // control whether the video should play in fullscreen or inline
+  loop // control whether the video should loop when ended
+  onReady={e => this.setState({ isReady: true })}
+  onChangeState={e => this.setState({ status: e.state })}
+  onChangeQuality={e => this.setState({ quality: e.quality })}
+  onError={e => this.setState({ error: e.error })}
+  style={{ alignSelf: 'stretch', height: 300 }}
+/>
 
 	</Text>
 	</ScrollView>
 
 
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-	<Text></Text>
-
+	 
 		<View style={{flex:9,position:'absolute',color:'white',bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
 	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
@@ -194,4 +197,4 @@ const styles = StyleSheet.create({
    
 });
 
-export default About;
+export default Videos;
