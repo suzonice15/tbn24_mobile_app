@@ -21,6 +21,9 @@ import {
   TouchableHighlight,
   Button
 } from 'react-native';
+
+import CommentForm from "./CommentForm";
+
   class SingleBlog  extends Component {
 	
 	 constructor(props){
@@ -33,8 +36,10 @@ import {
  		 name:'',
 		 email:'',		
 		 post_id:'',
+		 comment_id:0,
 		 message:''
 		}
+		    this.subCommentForm = this.subCommentForm.bind(this);
 	}
 	 
 	 
@@ -114,6 +119,51 @@ import {
 			}
 		});	
 	}
+	subCommentSave=(comment_id)=>{
+			 			this.setState({comment_id:comment_id});
+						if(this.state.comment_id){
+							
+							this.subCommentForm()
+							
+						}
+
+ 	}
+	
+	subCommentForm=()=>{
+		return(
+		<View>
+		<TextInput
+		
+onChangeText={(value)=>this.setState({name:value})}
+        style={{ margin: 15,
+      height: 50,fontSize:20,
+      borderColor: 'black',
+      borderWidth: 2}}
+        placeholder="Enter Your Name"
+         
+      />
+	  <TextInput
+	  onChangeText={(value)=>this.setState({email:value})}
+        style={{ margin: 15,
+      height: 50,fontSize:20,
+      borderColor: 'black',
+      borderWidth: 2}}
+        placeholder="Enter Your Email"
+         
+      />
+	  <TextInput
+	  onChangeText={(value)=>this.setState({message:value})}
+    multiline={true}
+	 placeholder="Enter Your Comment"
+    numberOfLines={10}
+    style={{fontSize:20, margin: 15,height:200,   borderColor: 'black',
+      borderWidth: 2,textAlignVertical: 'top',}}/>
+	  <Button  onPress={this.mainCommentStore} title="Submit Now" ></Button>  
+		
+		</View>
+		
+		)
+	}
  
 	 
 	
@@ -182,11 +232,23 @@ onChangeText={(value)=>this.setState({name:value})}
 	   
 	   <Text style={{fontSize:20,color:'black'}}>{row.name}</Text>
 	   <Text>{row.comments} </Text>
+	   <Text onPress={ this.subCommentSave.bind(this, row.comment_id) } >Replay</Text>
+		   {
+
+			   this.state.comment_id==row.comment_id ?  
+				   
+				    <CommentForm comment_id={row.comment_id} post_id={this.state.post_id} ></CommentForm>
+			    :null
+		   
+		   
+		   
+		   } 
+		 
 	   
 	     {
 			 (typeof(row.sub_comment)=='object')?
 			 
-			  row.sub_comment.map((sub)=><View style={{paddingLeft:20}}>	   
+			  row.sub_comment.map((sub)=><View style={{paddingLeft:30}}>	   
 	  
 	  <Text style={{fontSize:20,color:'black'}}>{sub.name}</Text>
 	   <Text>{sub.comments} </Text>

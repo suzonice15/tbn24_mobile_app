@@ -6,6 +6,7 @@
  * @flow strict-local
  */
 import { Navigation } from "react-native-navigation";
+import Program from "./Program";
 
 import React,{Component} from 'react';
 import {
@@ -61,6 +62,17 @@ class About  extends Component {
 			}
 		});	
 	}
+	  ViewReturn(){
+		
+		return(
+		<View>
+	<Text>Name</Text>
+	<Text>Email</Text>
+	<Text>Comment</Text>
+ 
+	</View>
+		)
+	}
 
 	 
 	
@@ -86,6 +98,9 @@ ABOUT US
 <Text style={{textAlign:'left',paddingLeft:10,color:'black',margin:8,fontSize:19}}>
 
 	{this.state.about}
+	
+ 
+	 
 
 	</Text>
 	</ScrollView>
