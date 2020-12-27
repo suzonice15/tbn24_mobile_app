@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import { Navigation } from "react-native-navigation";
-
+import moment from 'moment';
 import React,{Component} from 'react';
 import {
    StyleSheet,
@@ -16,6 +16,7 @@ import {
   Text,
   FlatList,
   StatusBar,
+  ActivityIndicator,
   Alert,
   TouchableHighlight,
   Button
@@ -29,6 +30,7 @@ import {
 
 		this.state={
 			Data:'',
+			loading:true,
  			
 		}
 	}
@@ -41,7 +43,8 @@ import {
 	 let URL="https://www.tbn24.com/api/blogs";
 		let config={method:'GET'}
 		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
-	 			this.setState({Data:response});
+	 			this.setState({Data:response,loading:false});
+				 console.log(response)
 		}).catch((error)=>{
 			 
 			Alert.alert("Internet Problem"); 
@@ -93,8 +96,8 @@ ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_des
 <Image style={{width:'100%',height:260}}  source={{uri:'https://www.tbn24.com/public/uploads/post/'+post_picture}} />
 <View style={{backgroundColor:'#ddd',marginBottom:20,padding:10}}>
 <Text style={{color:'color',fontSize:20,textAlign:'left'}} >{post_title}</Text>
-<Text style={{color:'color',fontSize:18,textAlign:'center'}} >{post_created_date}
-      |  Viewed: {post_view} </Text>
+<Text style={{color:'color',fontSize:18,textAlign:'center'}} >{moment({post_created_date}).format('Do MMMM YYYY')} 
+               |    Viewed: {post_view} </Text>
 <Text style={{color:'color',fontSize:16,textAlign:'left'}}>{post_description.replace(/(<([^>]+)>)/gi, "").substring(0, 160)}.....
 </Text>
 </View>
@@ -112,7 +115,7 @@ ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_des
   <View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}} >
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
 <TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />	
+	<Image   style={{width:50,marginLeft:15,marginTop:20}}  source={require('../images/menu.png')} />	
 	</TouchableHighlight>
 	</View>
 	<ScrollView style={{marginTop:80,marginBottom:80}}>
@@ -122,6 +125,18 @@ ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_des
 
 
 
+	   <View>
+ { 	this.state.loading ?
+	     <ActivityIndicator  style={{fontSize:30,marginTop:100}}size="large" color="red" />:null		 
+		 }
+		  </View>
+
+ 
+ { 	this.state.loading ?
+	     <View  style={{marginTop:300}}>		 
+		
+		  </View>:null	
+ }		  
  
  <FlatList  numColumns={1} data={this.state.Data}   keyExtractor={item =>item.post_id.toString()} renderItem={({item})=><this.ChildView post_id={item.post_id} post_title={item.post_title} post_name={item.post_name} post_picture={item.post_picture} post_description={item.post_description} post_created_date={item.post_created_date} post_view={item.post_view}   />} />
 

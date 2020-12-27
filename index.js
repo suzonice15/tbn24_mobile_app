@@ -12,6 +12,8 @@ import SingleProgram from "./components/SingleProgram";
 import Videos from "./components/Videos";
 import SingleBlog from "./components/SingleBlog";
 import Blog from "./components/Blog";
+import YouTube from "./components/Youtube";
+import Playlist from "./components/Playlist";
 Navigation.registerComponent('ProgramPage', () => Program);
 Navigation.registerComponent('TodayShedulePage', () => TodayShedule);
 Navigation.registerComponent('AboutPage', () => About);
@@ -24,6 +26,8 @@ Navigation.registerComponent('SingleProgramPage', () => SingleProgram);
 Navigation.registerComponent('VideoPage', () => Videos);
 Navigation.registerComponent('SingleBlogPage', () => SingleBlog);
 Navigation.registerComponent('BlogPage', () => Blog);
+Navigation.registerComponent('YouTubePage', () => YouTube);
+Navigation.registerComponent('PlaylistPage', () => Playlist);
 
 Navigation.setDefaultOptions({
   statusBar: {

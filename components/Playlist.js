@@ -18,7 +18,7 @@ import {
  import { Navigation } from "react-native-navigation";
 import YouTube from 'react-native-youtube';
 
-class Videos  extends Component {
+class Playlist  extends Component {
 	
 	
 	constructor(props){
@@ -27,9 +27,8 @@ class Videos  extends Component {
 				Navigation.events().bindComponent(this)
 
 		this.state={
-			PopularVideo:[],
 			PlaylistVideo:[],
-			Data:[],
+			 
 			loading:true,
 			isReady:false,
 			refressicon:true,
@@ -57,33 +56,16 @@ class Videos  extends Component {
 		
 		
 		
-		var URL="https://www.tbn24.com/api/popularVideo";
+		var URL="https://www.tbn24.com/api/playlistVideo/"+this.props.playlist;
 		var config={method:'GET'}
 		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
-	 			this.setState({PopularVideo:response,loading:false,refressicon:false});
+	 			this.setState({PlaylistVideo:response,loading:false,refressicon:false});
 		}).catch((error)=>{
 			this.setState({loading:false,refressicon:false});
 			Alert.alert("Internet Problem"); 
 		});
 		
-		var URL="https://www.tbn24.com/api/playlistVideo";
-		var config={method:'GET'}
-		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
-	 			this.setState({PlaylistVideo:response});
-		}).catch((error)=>{
-			this.setState({loading:false,refressicon:false});
-			Alert.alert("Internet Problem"); 
-		});
-		
-		 var URL="https://www.tbn24.com/api/allVideos";
-		var config={method:'GET'}
-		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
-	 			this.setState({Data:response});
-		}).catch((error)=>{
-			this.setState({loading:false,refressicon:false});
-			 
-		});
-		
+		 
 		
 		
 				
@@ -98,62 +80,10 @@ class Videos  extends Component {
 		});
 	
 	}
-	singleProgram=(program_id)=>{
-		
-		Alert.alert(program_id)
-	}
-	
-	
-		 PlaylistChildView=({title,picture,playlist})=>{
-		 return(
-		   <View>
-		 <TouchableHighlight   
-		 
-		  onPress={()=>{
-
-		Navigation.push(this.props.componentId, {
-			component: {
-				name: 'PlaylistPage', // Push the screen registered with the 'Settings' key
-				options: { // Optional options object to configure the screen
-					topBar: {
-						title: {
-							text: `${title}` // Set the TopBar title of the new Screen
-						}
-					}
-				},
-				    passProps: {
-      playlist:`${playlist}`,
-      playlistTitle:`${title}`,
-     
-      
-    }
-			}
-		})
-	}}
-		 >
-		 <View style={{flexDirection:'column',backgroundColor:'#B10000',width:185,margin:5}}>
-		  <View>
-		 
- 		 
-	 <Image source={{uri:picture}}  style={{height:180,padding:5,width:"100%"}}/>
-		  
-		 </View>
-		  <View style={{backgroundColor:'#B10000',margin:5}}>
-		 
-		 	 <Text style={{color:'white',textAlign:'center',height:50,fontSize:18}}>{title}</Text>		 
-		  
-		 </View>	   	 
-	
-		 </View>
-		  </TouchableHighlight>
-		  		   </View>
-
-		 
-		 )
-	 }
+	 
 	
 	  
-	 PopularChildView=({title,picture,videoId})=>{
+	 PlaylistChildView=({title,picture,videoId})=>{
 		 return(
 		   <View>
 		 <TouchableHighlight   
@@ -200,54 +130,7 @@ class Videos  extends Component {
 		 )
 	 }
 	
-	   
-	 ChildView=({title,picture,videoId})=>{
-		 return(
-		   <View>
-		 <TouchableHighlight   
-		 
-		  onPress={()=>{
-
-		Navigation.push(this.props.componentId, {
-			component: {
-				name: 'YouTubePage', // Push the screen registered with the 'Settings' key
-				options: { // Optional options object to configure the screen
-					topBar: {
-						title: {
-							text: `${title}` // Set the TopBar title of the new Screen
-						}
-					}
-				},
-				    passProps: {
-      youtubeVideoId:`${videoId}`,
-     
-      
-    }
-			}
-		})
-	}}
-		 >
-		 <View style={{flexDirection:'column',backgroundColor:'#B10000',width:185,margin:5}}>
-		  <View>
-		 
- 		 
-	 <Image source={{uri:picture}}  style={{height:180,padding:5,width:"100%"}}/>
-		  
-		 </View>
-		  <View style={{backgroundColor:'#B10000',margin:5}}>
-		 
-		 	 <Text style={{color:'white',textAlign:'center',height:50,fontSize:18}}>{title}</Text>		 
-		  
-		 </View>	   	 
-	
-		 </View>
-		  </TouchableHighlight>
-		  		   </View>
-
-		 
-		 )
-	 }
-	
+	    
 	render(){
 		
 		if(this.state.loading==true){
@@ -284,30 +167,15 @@ class Videos  extends Component {
 	   <ScrollView style={{marginTop:90,height:'80%'}} >  
 
    <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
-
-Popular Videos
+	   {this.props.playlistTitle}
 </Text> 
  
  
- <FlatList  numColumns={2} data={this.state.PopularVideo}   keyExtractor={item =>item.videoId.toString()} renderItem={({item})=><this.PopularChildView title={item.title} videoId={item.videoId} picture={item.picture}     />} />
+ <FlatList  numColumns={2} data={this.state.PlaylistVideo}   keyExtractor={item =>item.videoId.toString()} renderItem={({item})=><this.PlaylistChildView title={item.title} videoId={item.videoId} picture={item.picture}     />} />
 
- <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
-
- Playlist Videos
-</Text>
-
-<FlatList  numColumns={2} data={this.state.PlaylistVideo}   keyExtractor={item =>item.playlist.toString()} renderItem={({item})=><this.PlaylistChildView title={item.title} playlist={item.playlist} picture={item.picture}     />} />
-
-
-
-   <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
-
- Videos
-</Text>
  
- <FlatList onRefresh={()=>this.PullRefresh()} refreshing={this.state.refressicon} numColumns={2} data={this.state.Data}   keyExtractor={item =>item.index.toString()} renderItem={({item})=><this.ChildView title={item.title} videoId={item.videoId} picture={item.picture}     />} />
-     
-       </ScrollView>    
+ 
+     </ScrollView>    
 	   
 	   	<Text></Text>
 	   	<Text></Text>
@@ -410,4 +278,4 @@ const styles = StyleSheet.create({
    
 });
 
-export default Videos;
+export default Playlist;

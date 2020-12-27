@@ -108,7 +108,7 @@ sideMenuShow=()=>{
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
 	
 	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	<Image   style={{width:50,marginLeft:15,marginTop:20}}  source={require('../images/menu.png')} />
 	
 	</TouchableHighlight>
 	</View>  
@@ -188,10 +188,9 @@ Password </Text>
   </ScrollView>
   
    
-  <Text></Text>
-  <Text></Text>
-  <Text></Text>
-  <Text></Text>
+  <View style={{marginTop:83}}></View>
+ 
+ 
    
   	<View style={{flex:9,position:'absolute',color:'white',marginTop:10,bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
 	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >

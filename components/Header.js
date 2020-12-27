@@ -21,8 +21,8 @@ import {
 
 class Header  extends Component {
 	
-	 constructor(props){		
-		super(props);
+	 constructor(){		
+		super();
 		Navigation.events().bindComponent(this)
 		this.state={
 			about:'', 			
@@ -60,13 +60,17 @@ class Header  extends Component {
 	render(){
   return (  
   
-   <View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}} >  
+  <View style={{flex:10,flexDirection:'row',marginTop:0, backgroundColor:'#B10000'}}> 
+<View style={{flex:8}}>  
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-<TouchableHighlight onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	 </View>
+	<View style={{flex:2}}> 
+	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
+	<Image   style={{width:50,marginTop:20}}  source={require('../images/menu.png')} />
 	
 	</TouchableHighlight>
-	  </View>
+	</View> 	
+	</View>
   );
 	}
 }

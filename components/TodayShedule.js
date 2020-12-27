@@ -1,5 +1,7 @@
 
 import React,{Component} from 'react';
+import moment from 'moment';
+
 import {
    StyleSheet,
   Alert,
@@ -70,7 +72,7 @@ sideMenuShow=()=>{
  
 	 ChildView=({program_name,program_details,program_id,schedule_date,img,start_time})=>{
 
-		 return(
+ 		 return(
 		 
 		 		  
 				    <View>
@@ -109,14 +111,15 @@ sideMenuShow=()=>{
 		  <View style={{backgroundColor:'white',margin:5,flex:50}}>
 		 
 		 	 <Text style={{color:'black',fontSize:15}}>{program_name}</Text>
-		 	 <Text style={{color:'black',fontSize:15}}>{schedule_date}</Text>
+		 	 <Text style={{color:'black',fontSize:15}}>{moment({schedule_date}).format('Do MMMM YYYY')}</Text>
  		 
 		  
 		 </View>
 		 
 		   <View style={{backgroundColor:'white',margin:5,flex:20}}>
 		 
-		 	 <Text style={{color:'white',backgroundColor:'#5a0000',fontWeight:'bold',borderRadius:50,width:80,height:75,paddingRight:15,paddingLeft:16,paddingTop:22,fontSize:18}}>{start_time}</Text>
+		 	 <Text style={{color:'white',backgroundColor:'#5a0000',fontWeight:'bold',borderRadius:50,width:80,height:75,paddingRight:15,paddingLeft:16,paddingTop:22,fontSize:18}}>{start_time}
+</Text>
 		 
 		  
 		 </View>
@@ -131,24 +134,7 @@ sideMenuShow=()=>{
 	
 	render(){
 		
-		
-		if(this.state.loading==true){
-			return(
-			<View>
- 			 <View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}}>  
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	
-	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
-	
-	</TouchableHighlight>
-
-	</View> 
-</View>	
-			)
-			
-		} else {
-			
+		 
 	  return ( 
   
   
@@ -157,7 +143,7 @@ sideMenuShow=()=>{
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
 	
 	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	<Image   style={{width:50,marginLeft:15,marginTop:20}}  source={require('../images/menu.png')} />
 	
 	</TouchableHighlight>
 	</View>  
@@ -167,6 +153,13 @@ sideMenuShow=()=>{
 
 Today's Schedule
 </Text>
+
+ {
+			this.state.loading ?
+	     <ActivityIndicator  style={{fontSize:30,marginTop:100}}size="large" color="red" />:null
+			 
+		 }
+		
   
  
  <FlatList data={this.state.Data}  onRefresh={()=>this.PullRefresh()} refreshing={this.state.refressicon}   keyExtractor={item => item.id} renderItem={({item})=><this.ChildView program_id={item.program_id} program_details={item.program_details} start_time={item.start_time} program_name={item.program_name} img={item.program_image} schedule_date={item.schedule_date} />} />
@@ -254,7 +247,7 @@ Today's Schedule
      
   );
 			
-		}
+		
 
 	}
 }

@@ -5,126 +5,100 @@
  * @format
  * @flow strict-local
  */
+import { Navigation } from "react-native-navigation";
+import Program from "./Program";
+import moment from 'moment';
 
 import React,{Component} from 'react';
-import { Navigation } from "react-native-navigation";
-
 import {
-  SafeAreaView,
-  StyleSheet,
+   StyleSheet,
   ScrollView,
   View,
   Image,
   Text,
-  TouchableHighlight,
-  ActivityIndicator,
   FlatList,
-  StatusBar
+  StatusBar,
+  ActivityIndicator,
+  Alert,
+  TouchableHighlight,
+  Button
 } from 'react-native';
- import Video from 'react-native-video';
- import {LivePlayer} from "react-native-live-stream";
- import Header from "./Header";
+   
+import YouTube from 'react-native-youtube';
 
- 
-
-class Home  extends Component {
+class Youtube  extends Component {
 	
-	
-	constructor(props){		
+	 constructor(props){
+		
 		super(props);
 		Navigation.events().bindComponent(this)
-		this.state={
-			video:'', 			
-			loading:true, 			
+		 this.state={
+			about:'',
+			loading:true,
+			isReady:false,
+			refressicon:true,
+			status:'',
+			quality:'',
+			error:''
+
 		}
 	}
+	 
 	
 	
-	navigationButtonPressed({componentId}){
-		Navigation.mergeOptions(this.props.componentId,{			
-			sideMenu:{
-				left:{
-					visible:true
-				}
-			}
-		});
-	}
-	   componentDidMount=()=>{
-		
-	 let URL="https://www.tbn24.com/api/video";
-		let config={method:'GET'}
-		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
-	 			this.setState({video:response,loading:false});
-		}).catch((error)=>{
-			 
-			Alert.alert("Internet Problem"); 
-		});			
-	}
+	   
 	
-	
-sideMenuShow=()=>{	
+	sideMenuShow=()=>{	
  		Navigation.mergeOptions(this.props.componentId,{			
 			sideMenu:{
 				left:{
 					visible:true
 				}
 			}
-		});
-	
-	}	
+		});	
+	}
+	  
 	 
 	
 	render(){
   return ( 
   
   
-    <ScrollView> 	
-  <View style={{flex:10,flexDirection:'row',marginTop:0, backgroundColor:'#B10000'}}> 
-<View style={{flex:8}}>  
+    <View>
+
+  <View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}} >
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	 </View>
-	<View style={{flex:2}}> 
-	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginTop:20}}  source={require('../images/menu.png')} />
+<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
+	<Image   style={{width:50,marginLeft:15,marginTop:20}}  source={require('../images/menu.png')} />
 	
 	</TouchableHighlight>
-	</View> 
-	
 	</View>
 	
-	
-	 <View style={{backgroundColor:'white',margin:5}}>
-		 {
-			this.state.loading ?
-	     <ActivityIndicator  style={{fontSize:30,marginTop:100}}size="large" color="red" />:null
-			 
-		 }
-		
-		 {
-			this.state.loading ?
-		null:<LivePlayer source={{uri:this.state.video}}
-   ref={(ref) => {
-       this.player = ref
-   }}
-   style={styles.backgroundVideo}
-   paused={false}
-   muted={false}
-   bufferTime={1}
-   maxBufferTime={300}
-   resizeMode={"contain"}
-   onLoading={()=>{}}
-   onLoad={()=>{}}
-   onEnd={()=>{}}
-		 />
-		 }
- </View> 
- {
-			this.state.loading ?
- <View style={{marginTop:375}}></View>:<View style={{marginTop:210}}></View>
- }
+	 <View  style={{margin:10,marginTop:100}}>
+	 
+	 <YouTube
+	apiKey='AIzaSyAEcAvRfkqGYHQMm9neonaCzkxaIttEoxo'
+  videoId={this.props.youtubeVideoId} // The YouTube video ID
+  play // control playback of video with true/false
+  fullscreen // control whether the video should play in fullscreen or inline
+  loop // control whether the video should loop when ended
+  onReady={e => this.setState({ isReady: true })}
+  onChangeState={e => this.setState({ status: e.state })}
+  onChangeQuality={e => this.setState({ quality: e.quality })}
+  onError={e => this.setState({ error: e.error })}
+  style={{ alignSelf: 'stretch', height: 200 }}
+/>
+
+	 
+	 </View>
+	 
+	  <View  style={{marginTop:300}}>
+	  
+	  </View>
+
   
-  
- <View style={{flex:9,position:'absolute',color:'white',marginTop:50,bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
+
+		<View style={{flex:9,position:'absolute',color:'white',bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
 	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
@@ -196,8 +170,9 @@ sideMenuShow=()=>{
 
 	</View>
 
-   
-  </ScrollView>
+ 
+ 
+  </View>
      
   );
 	}
@@ -207,8 +182,7 @@ const styles = StyleSheet.create({
 	 
    backgroundVideo: {
     position: 'relative',
-	height:300 ,
-marginTop:2	
+	height:300    
   },
   logo:{
 		width:300,
@@ -218,4 +192,4 @@ marginTop:2
    
 });
 
-export default Home;
+export default Youtube;

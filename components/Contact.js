@@ -80,7 +80,7 @@ sideMenuShow=()=>{
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
 	
 	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	<Image   style={{width:50,marginLeft:15,marginTop:20}}  source={require('../images/menu.png')} />
 	
 	</TouchableHighlight>
 	</View> 

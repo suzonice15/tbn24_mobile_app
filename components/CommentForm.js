@@ -80,9 +80,8 @@ class CommentForm  extends Component {
 		 });
 		 let config={method:'POST',headers:configHeader,body:configBody}
 		 fetch(URL,config).then((response)=>response.text())
-		 .then((responsData)=>{
- 			 
-			  
+		 .then((responsData)=>{			 
+			   Alert.alert(responsData)
 			  this.setState({success:responsData})
 		 }).catch((erorr)=>{
 			 Alert.alert('Something is Wrong')
@@ -104,8 +103,7 @@ onChangeText={(value)=>this.setState({sub_name:value})}
         placeholder="Enter Your Name"
          
       />
-	  <Text>{this.props.post_id}</Text>
-	  <Text>{this.props.comment_id}</Text>
+	 
 	  <TextInput
 	  onChangeText={(value)=>this.setState({sub_email:value})}
         style={{ margin: 5,

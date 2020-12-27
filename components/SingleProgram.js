@@ -34,13 +34,9 @@ class SingleProgram  extends Component {
 		}
 	}
 	 
+	 
 	
-	PullRefresh=()=>{
-				this.onApiCall();
-
-		
-	}
-	onApiCall=()=>{
+	componentDidMount=()=>{
 		
 		this.setState({refressicon:true});
 
@@ -52,12 +48,6 @@ class SingleProgram  extends Component {
 			this.setState({loading:false,refressicon:false});
 			Alert.alert("Internet Problem"); 
 		});
-		
-	}
-	
-	componentDidMount=()=>{
-		
-		this.onApiCall();
 				
 	}
 	sideMenuShow=()=>{	
@@ -103,24 +93,7 @@ class SingleProgram  extends Component {
 	
 	render(){
 		
-		if(this.state.loading==true){
-			return(
-			<View>
- 			 <View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}}>  
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	
-	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
-	
-	</TouchableHighlight>
-
-	</View> 
-</View>	
-			
- 			)
-			
-		} else {
-			
+		 
 			
   return ( 
 <View>
@@ -128,7 +101,7 @@ class SingleProgram  extends Component {
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
 	
 	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	<Image   style={{width:50,marginLeft:15,marginTop:20}}  source={require('../images/menu.png')} />
 	
 	</TouchableHighlight>
 	</View> 
@@ -141,6 +114,8 @@ class SingleProgram  extends Component {
 	   
 	   
 	   </Text> 
+	   	    
+  
 	   <View style={{ margin:10}}>
 	   <Image style={{width:'100%',height:250}} source={{uri:'https://www.tbn24.com/public/uploads/program/'+this.props.program_image}} />
 	   
@@ -281,7 +256,7 @@ class SingleProgram  extends Component {
  </View>  
   );
 			
-		}
+		
 	}
 }
 

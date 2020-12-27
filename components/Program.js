@@ -79,7 +79,7 @@ class Program  extends Component {
 	   
 	 ChildView=({program_details,program_id,program_name,program_image})=>{
 		 return(
-		   <View>
+		   <View >
 		 <TouchableHighlight 
 		  onPress={()=>{
 
@@ -104,13 +104,13 @@ class Program  extends Component {
 		})
 	}}
 		 >
-		 <View style={{flexDirection:'column',backgroundColor:'#B10000',width:190,margin:5}}>
-		  <View>
+		 <View style={{flex:10,flexDirection:'column',backgroundColor:'#B10000',width:185,margin:5}}>
+		  <View style={{flex:8}}>
 		 
 		 <Image source={{uri:'https://www.tbn24.com/public/uploads/program/'+program_image}}  style={{height:180,padding:5,width:"100%"}}/>
 		  
 		 </View>
-		  <View style={{backgroundColor:'#B10000',margin:5}}>
+		  <View style={{flex:2,backgroundColor:'#B10000',margin:5}}>
 		 
 		 	 <Text style={{color:'white',textAlign:'center',height:50,fontSize:18}}>{program_name}</Text>		 
 		  
@@ -124,26 +124,7 @@ class Program  extends Component {
 		 )
 	 }
 	
-	render(){
-		
-		if(this.state.loading==true){
-			return(
-			<View>
- 			 <View style={{flex:1,flexDirection:'row', backgroundColor:'#B10000'}}>  
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	
-	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
-	
-	</TouchableHighlight>
-
-	</View> 
-</View>	
-			
- 			)
-			
-		} else {
-			
+	render(){ 
 			
   return ( 
 <View>
@@ -151,17 +132,27 @@ class Program  extends Component {
 	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
 	
 	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:40,marginTop:20}}  source={require('../images/menu.png')} />
+	<Image   style={{width:50,marginLeft:20,marginTop:20}}  source={require('../images/menu.png')} />
 	
 	</TouchableHighlight>
 	</View> 
-	    
+	  
+
             
 	   <ScrollView style={{marginTop:90,height:'80%'}} >  
 
    <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
 Our Programs
 </Text> 
+ 
+
+	   <View>
+ { 	this.state.loading ?
+	     <ActivityIndicator  style={{fontSize:30,marginTop:100}}size="large" color="red" />:null		 
+		 }
+		  </View>	
+  
+		
  
 
  
@@ -252,7 +243,7 @@ Our Programs
  </View>  
   );
 			
-		}
+		
 	}
 }
 
