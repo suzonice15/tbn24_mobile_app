@@ -28,6 +28,7 @@ class SingleProgram  extends Component {
 
 		this.state={
 			Data:[],
+			playlists:[],
 			loading:true,
 			refressicon:true
 			
@@ -43,7 +44,7 @@ class SingleProgram  extends Component {
 		let URL="https://www.tbn24.com/api/program/"+this.props.program_id;
 		let config={method:'GET'}
 		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
-	 			this.setState({Data:response,loading:false,refressicon:false});
+	 			this.setState({Data:response.schedule,playlists:response.plalists,loading:false,refressicon:false});
 		}).catch((error)=>{
 			this.setState({loading:false,refressicon:false});
 			Alert.alert("Internet Problem"); 
@@ -60,26 +61,45 @@ class SingleProgram  extends Component {
 		});
 	
 	}
-	singleProgram=(program_id)=>{
-		
-		Alert.alert(program_id)
-	}
-	
+	 
 	
 	   
-	 ChildView=({program_id,program_name,program_image})=>{
+	 plalistsView=({title,picture,videoId})=>{
 		 return(
 		   <View>
-		 <TouchableHighlight>
-		 <View style={{flexDirection:'column',backgroundColor:'#B10000',width:190,margin:5}}>
+		 <TouchableHighlight   
+		 
+		  onPress={()=>{
+
+		Navigation.push(this.props.componentId, {
+			component: {
+				name: 'YouTubePage', // Push the screen registered with the 'Settings' key
+				options: { // Optional options object to configure the screen
+					topBar: {
+						title: {
+							text: `${title}` // Set the TopBar title of the new Screen
+						}
+					}
+				},
+				    passProps: {
+      youtubeVideoId:`${videoId}`,
+     
+      
+    }
+			}
+		})
+	}}
+		 >
+		 <View style={{flexDirection:'column',backgroundColor:'#B10000',width:185,margin:5}}>
 		  <View>
 		 
-		 <Image source={{uri:'https://www.tbn24.com/public/uploads/program/'+program_image}}  style={{height:180,padding:5,width:"100%"}}/>
+ 		 
+	 <Image source={{uri:picture}}  style={{height:180,padding:5,width:"100%"}}/>
 		  
 		 </View>
 		  <View style={{backgroundColor:'#B10000',margin:5}}>
 		 
-		 	 <Text style={{color:'white',textAlign:'center',height:50,fontSize:18}}>{program_name}</Text>		 
+		 	 <Text style={{color:'white',textAlign:'center',height:50,fontSize:18}}>{title}</Text>		 
 		  
 		 </View>	   	 
 	
@@ -90,6 +110,7 @@ class SingleProgram  extends Component {
 		 
 		 )
 	 }
+	
 	
 	render(){
 		
@@ -110,8 +131,7 @@ class SingleProgram  extends Component {
 	   <ScrollView  >  
 
    <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
-	   {this.props.programName}
-	   
+	   {this.props.programName}   
 	   
 	   </Text> 
 	   	    
@@ -125,6 +145,7 @@ class SingleProgram  extends Component {
  	   
 	   </Text> 
 	   	</View>
+		
 		
 		 <View style={{ margin:10,borderColor:'red',borderWidth:1}}>
 	  
@@ -146,7 +167,7 @@ class SingleProgram  extends Component {
 		   
 		   
 			
-			 {this.state.Data.map((program) => {
+			 {this.state.Data.map((program) => { 
         return  <View style={{ flex:9,flexDirection:'row',marginLeft:5,marginRight:5,marginTop:0}}>
 			
             <View style={{ flex:2,borderWidth:1,borderColor:'red'}}>
@@ -161,12 +182,20 @@ class SingleProgram  extends Component {
 		   
 	     	</View> 
       })}
-	  <Text></Text>
-	  <Text></Text>
+	  
  
 	  
 	   	</View>
 		
+		<View>
+		 
+		<View  style={{color:'white',padding:10}}>
+		  <Text style={{color:'white',padding:10,fontSize:20,textAlign:'center',backgroundColor:'red'}}>
+	  Playlist Videos 
+	  </Text>
+	  </View>
+		<FlatList  numColumns={2} data={this.state.playlists}   keyExtractor={item =>item.videoId.toString()} renderItem={({item})=><this.plalistsView title={item.title} videoId={item.videoId} picture={item.picture}     />} /> 
+			</View>
 		
  
 

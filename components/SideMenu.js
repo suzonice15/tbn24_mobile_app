@@ -4,13 +4,54 @@ import {
     View,
     Image,
     Text,
+    Share,
+	BackHandler,
+	Alert,
+	Platform,
+	Linking
+	
 } from 'react-native';
 
 import { Navigation } from "react-native-navigation";
 
 class SideMenu  extends Component {
 
+   componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.backAction);
+  }
 
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.backAction);
+  }
+     openStore = () => {
+    //This is the main trick
+    if (Platform.OS != 'ios') {
+      Linking.openURL(
+        `https://apps.apple.com/us/app/somoy-tv/id1234444890#?platform=iphone`,
+      ).catch(
+          (err) => alert('Please check for Google Play Store')
+      );
+    } else {
+      Linking.openURL(
+        `https://play.google.com/store/apps/details?id=com.tbn.live&hl=bn&gl=US`,
+      ).catch((err) => alert('Please check for the App Store'));
+    }
+  };
+
+  backAction = () => {
+    Alert.alert(
+      'Exit',
+      'Do you want to close this App ?',
+      [
+        {text: 'CANCEL', style: 'cancel'},
+        {text: 'OK', onPress: () => {
+          BackHandler.exitApp()
+        }
+      }
+      ]
+    );
+    return true;
+  }
 Program=()=>{
 	
 	Navigation.push('CenterScreen',{
@@ -288,7 +329,7 @@ render(){
 			 <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/about-us.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
@@ -306,7 +347,7 @@ render(){
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/contact.png')} />
 	 </View>
 	 
 	 
@@ -320,7 +361,7 @@ render(){
 	    <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	  <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/term.png')} />
 	 </View>
 	 
 	 
@@ -334,7 +375,7 @@ render(){
 			  <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/privacy-policy.png')} />
 	 </View>
 	 
 	 
@@ -348,7 +389,7 @@ render(){
      <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/program_menu.png')} />
 	 </View>
 	 
 	 
@@ -361,7 +402,7 @@ render(){
 	  <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	  <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/calendar.png')} />
 	 </View>
 	 
 	 
@@ -378,7 +419,7 @@ Today's Schedule
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/user.png')} />
 	 </View>
 	 
 	 
@@ -392,7 +433,7 @@ Today's Schedule
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	   
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/user.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
@@ -404,7 +445,7 @@ Today's Schedule
 	 <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/play.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
@@ -417,7 +458,7 @@ Today's Schedule
 	  <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/blog.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
@@ -431,11 +472,11 @@ Today's Schedule
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/rating.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
-<Text    onPress={this.Blog}  style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}}>Rate This App</Text>
+<Text    onPress={this.openStore}  style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}}>Rate This App</Text>
 
 	 </View>
 	 
@@ -445,7 +486,7 @@ Today's Schedule
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/share.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
@@ -459,11 +500,11 @@ Today's Schedule
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
  <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/menu.png')} />
+	 <Image  style={{width:20,height:20}}   source={require('../images/cancel.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
-<Text    onPress={this.Blog}  style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}}>Close</Text>
+<Text    onPress={this.backAction}  style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}}>Close</Text>
 
 	 </View>
 	 
