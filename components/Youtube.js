@@ -5,10 +5,7 @@
  * @format
  * @flow strict-local
  */
-import { Navigation } from "react-native-navigation";
-import Program from "./Program";
-import moment from 'moment';
-
+import { Navigation } from "react-native-navigation";  
 import React,{Component} from 'react';
 import {
    StyleSheet,
@@ -64,18 +61,17 @@ class Youtube  extends Component {
   return ( 
   
   
-    <View>
-
-  <View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}} >
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:15,marginTop:20}}  source={require('../images/menu.png')} />
+  
+    <View style={{flex:100,width:"100%"}}> 	
+  <View style={{flex:15,width:"100%",marginTop:0, backgroundColor:'#B10000'}}> 
+ 	 <Image  style={styles.logo}  source={require('../images/logo.png')} /> 
 	
-	</TouchableHighlight>
 	</View>
 	
-	 <View  style={{margin:10,marginTop:100}}>
-	 
+	
+	 <View style={{flex:77,width:"100%",backgroundColor:'white'}}>
+	 	 <View style={{padding:10}}>
+
 	 <YouTube
 	apiKey='AIzaSyAEcAvRfkqGYHQMm9neonaCzkxaIttEoxo'
   videoId={this.props.youtubeVideoId} // The YouTube video ID
@@ -90,16 +86,18 @@ class Youtube  extends Component {
 />
 
 	 
-	 </View>
-	 
-	  <View  style={{marginTop:300}}>
 	  
+	 
+ 	  
+	  </View>
 	  </View>
 
   
 
-		<View style={{flex:9,position:'absolute',color:'white',bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+		
+  
+ <View style={{flex:8,flexDirection:'row',color:'white',width:'100%',padding:8, backgroundColor:'#B10000'}}>
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -123,7 +121,7 @@ class Youtube  extends Component {
 	<Text style={{color:'white'}} >Live</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -145,7 +143,7 @@ class Youtube  extends Component {
 <Text style={{color:'white'}} >Programs</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -168,10 +166,17 @@ class Youtube  extends Component {
 
 	</View>
 
+<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>
+<Image     source={require('../images/menu.png')} />
+</TouchableHighlight>
+
+<Text style={{color:'white'}} >Menu</Text>
+
 	</View>
 
- 
- 
+	</View>
+
   </View>
      
   );

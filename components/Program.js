@@ -104,7 +104,7 @@ class Program  extends Component {
 		})
 	}}
 		 >
-		 <View style={{flex:10,flexDirection:'column',backgroundColor:'#B10000',width:185,margin:5}}>
+		 <View style={{flex:10,flexDirection:'column',backgroundColor:'#B10000',width:190,margin:5}}>
 		  <View style={{flex:8}}>
 		 
 		 <Image source={{uri:'https://www.tbn24.com/public/uploads/program/'+program_image}}  style={{height:180,padding:5,width:"100%"}}/>
@@ -127,23 +127,20 @@ class Program  extends Component {
 	render(){ 
 			
   return ( 
-<View>
-<View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}}>  
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
+<View style={{flex:100,width:'100%'}}>
+<View style={{flex:16,flexDirection:'row',width:'100%',backgroundColor:'#B10000'}}>  
+	 <Image  style={styles.logo}  source={require('../images/logo.png')} />
 	
-	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:20,marginTop:20}}  source={require('../images/menu.png')} />
-	
-	</TouchableHighlight>
+	 
 	</View> 
 	  
+<View style={{flex:75,width:'100%'}}>
 
-            
-	   <ScrollView style={{marginTop:90,height:'80%'}} >  
-
-   <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
+        <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
 Our Programs
-</Text> 
+</Text>      
+ 
+  
  
 
 	   <View>
@@ -156,15 +153,13 @@ Our Programs
  
 
  
- <FlatList onRefresh={()=>this.PullRefresh()} refreshing={this.state.refressicon} numColumns={2} data={this.state.Data}   keyExtractor={item =>item.id.toString()} renderItem={({item})=><this.ChildView program_details={item.program_details} program_id={item.id} program_name={item.program_name} program_image={item.program_image}   />} />
+ <FlatList   numColumns={2} data={this.state.Data}   keyExtractor={item =>item.id.toString()} renderItem={({item})=><this.ChildView program_details={item.program_details} program_id={item.id} program_name={item.program_name} program_image={item.program_image}   />} />
      
-       </ScrollView>    
+  </View>	   
 	   
-	   	<Text></Text>
-	   	<Text></Text>
+	    
  
-  
-  <View style={{flex:9,position:'absolute',color:'white',marginTop:50,bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
+  <View style={{flex:8,flexDirection:'row',color:'white',marginTop:50,bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',  backgroundColor:'#B10000'}}>
 	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
@@ -234,9 +229,18 @@ Our Programs
 
 	</View>
 
+<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>
+<Image     source={require('../images/menu.png')} />
+</TouchableHighlight>
+
+<Text style={{color:'white'}} >Menu</Text>
+
 	</View>
 
-	   
+	</View>
+
+   
 
 		
 		

@@ -103,19 +103,18 @@ sideMenuShow=()=>{
   return ( 
   
   
-    <View>  
-  <View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}}>  
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
+    <View style={{flex:100,width:"100%"}}> 	
+  <View style={{flex:15,width:"100%",marginTop:0, backgroundColor:'#B10000'}}> 
+ 	 <Image  style={styles.logo}  source={require('../images/logo.png')} /> 
 	
-	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:15,marginTop:20}}  source={require('../images/menu.png')} />
+	</View>
 	
-	</TouchableHighlight>
-	</View>  
-	 
-  <ScrollView style={{marginTop:100,height:'70%'}} >  
-  <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'center',borderBottomWidth:1,paddingBottom:10}}>
+	
+	 <View style={{flex:77,width:"100%",backgroundColor:'white',margin:5}}> 
+	  <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'center',borderBottomWidth:1,paddingBottom:10}}>
 Registration Form</Text>
+  <ScrollView  >  
+ 
 
 
 
@@ -187,13 +186,16 @@ Password </Text>
   
   </ScrollView>
   
+  </View>
+  
    
-  <View style={{marginTop:83}}></View>
- 
+  
  
    
-  	<View style={{flex:9,position:'absolute',color:'white',marginTop:10,bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+  	
+  
+ <View style={{flex:8,flexDirection:'row',color:'white',width:'100%',padding:8, backgroundColor:'#B10000'}}>
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -217,7 +219,7 @@ Password </Text>
 	<Text style={{color:'white'}} >Live</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -239,7 +241,7 @@ Password </Text>
 <Text style={{color:'white'}} >Programs</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -262,9 +264,17 @@ Password </Text>
 
 	</View>
 
+<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>
+<Image     source={require('../images/menu.png')} />
+</TouchableHighlight>
+
+<Text style={{color:'white'}} >Menu</Text>
+
 	</View>
 
- 
+	</View>
+
  
   </View>
      

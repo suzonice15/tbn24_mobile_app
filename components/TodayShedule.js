@@ -15,8 +15,7 @@ import {
   ScrollView,
   ActivityIndicator
 } from 'react-native';
- import Video from 'react-native-video';
- import {LivePlayer} from "react-native-live-stream";
+
  
  import { Navigation } from "react-native-navigation";
 
@@ -101,7 +100,7 @@ sideMenuShow=()=>{
 	}}
 		 >
 
-		 <View style={{flexDirection:'row',backgroundColor:'white',border:2,borderColor:'black', margin:3,flex:100}}>
+		 <View style={{flexDirection:'row',backgroundColor:'white',border:2,borderColor:'black', margin:3,padding:5,flex:100}}>
 		   
 		  <View style={{flex:30}}>
 		 
@@ -138,17 +137,14 @@ sideMenuShow=()=>{
 	  return ( 
   
   
-    <View>
- <View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}}>  
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
+    <View style={{flex:100,width:"100%"}}> 	
+  <View style={{flex:15,width:"100%",marginTop:0, backgroundColor:'#B10000'}}> 
+ 	 <Image  style={styles.logo}  source={require('../images/logo.png')} /> 
 	
-	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:15,marginTop:20}}  source={require('../images/menu.png')} />
-	
-	</TouchableHighlight>
-	</View>  
-	 
-	   <ScrollView style={{marginTop:90,height:'80%'}} >  
+	</View> 
+	 	 <View style={{flex:77,width:"100%",backgroundColor:'white',margin:5}}>
+
+	    
   <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
 
 Today's Schedule
@@ -162,15 +158,16 @@ Today's Schedule
 		
   
  
- <FlatList data={this.state.Data}  onRefresh={()=>this.PullRefresh()} refreshing={this.state.refressicon}   keyExtractor={item => item.id} renderItem={({item})=><this.ChildView program_id={item.program_id} program_details={item.program_details} start_time={item.start_time} program_name={item.program_name} img={item.program_image} schedule_date={item.schedule_date} />} />
+ <FlatList data={this.state.Data}      keyExtractor={item => item.id} renderItem={({item})=><this.ChildView program_id={item.program_id} program_details={item.program_details} start_time={item.start_time} program_name={item.program_name} img={item.program_image} schedule_date={item.schedule_date} />} />
   
-  </ScrollView>
-  		 	 <Text></Text>
-  		 	 <Text></Text>
-
+ 
+  		  
+</View> 
   
-   <View style={{flex:9,position:'absolute',color:'white',marginTop:50,bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+  
+  
+ <View style={{flex:8,flexDirection:'row',color:'white',width:'100%',padding:8, backgroundColor:'#B10000'}}>
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -194,7 +191,7 @@ Today's Schedule
 	<Text style={{color:'white'}} >Live</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -216,7 +213,7 @@ Today's Schedule
 <Text style={{color:'white'}} >Programs</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -236,6 +233,15 @@ Today's Schedule
 </TouchableHighlight>
 
 <Text style={{color:'white'}} >Videos</Text>
+
+	</View>
+
+<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>
+<Image     source={require('../images/menu.png')} />
+</TouchableHighlight>
+
+<Text style={{color:'white'}} >Menu</Text>
 
 	</View>
 

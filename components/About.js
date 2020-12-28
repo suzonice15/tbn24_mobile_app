@@ -23,9 +23,7 @@ import {
   TouchableHighlight,
   Button
 } from 'react-native';
- import Video from 'react-native-video';
- import {LivePlayer} from "react-native-live-stream";
- 
+   
 
 class About  extends Component {
 	
@@ -34,7 +32,8 @@ class About  extends Component {
 		super(props);
 		Navigation.events().bindComponent(this)
 		 this.state={
-			about:'',
+			pageTitle:'',
+			pageDescription:'',
 			loading:true,
 
 		}
@@ -45,10 +44,10 @@ class About  extends Component {
 	  
 	   componentDidMount=()=>{
 		
-	 let URL="https://www.tbn24.com/api/about";
+	 let URL="https://www.tbn24.com/api/page/"+this.props.page_name;
 		let config={method:'GET'}
 		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
-	 			this.setState({loading:false,about:response.replace(/(<([^>]+)>)/gi, "")});
+	 			this.setState({loading:false,pageTitle:response.pageTitle,pageDescription:response.pageContent.replace(/(<([^>]+)>)/gi, "")});
 		}).catch((error)=>{
 			 
 			Alert.alert("Internet Problem"); 
@@ -73,18 +72,17 @@ class About  extends Component {
   return ( 
   
   
-    <View>
+    <View style={{flex:100,width:"100%"}}>
 
-  <View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}} >
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:15,marginTop:20}}  source={require('../images/menu.png')} />
+ <View style={{flex:15,marginTop:0,width:"100%", backgroundColor:'#B10000'}}> 
+ 	 <Image  style={styles.logo}  source={require('../images/logo.png')} /> 
 	
-	</TouchableHighlight>
-	</View>
-	<ScrollView style={{marginTop:80}}>
+	</View>	
+	
+	 <View style={{flex:77,width:"100%",backgroundColor:'white',margin:5}}>
+	<ScrollView style={{marginTop:0}}>
    <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
-ABOUT US
+	{this.state.pageTitle}
 </Text>
  {
 			this.state.loading ?
@@ -95,23 +93,21 @@ ABOUT US
 
 <Text style={{textAlign:'left',paddingLeft:10,color:'black',margin:8,fontSize:19}}>
 
-	{this.state.about}
+	{this.state.pageDescription}
 	
  
 	 
 
 	</Text>
 	</ScrollView>
+	</View>
 
 
-	{
-			this.state.loading ?
-	     <View  style={{marginTop:310}}></View>:<View  style={{marginTop:160}}></View>
-			 
-		 }
-
-		<View style={{flex:9,position:'absolute',color:'white',bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	 
+		
+  
+ <View style={{flex:8,flexDirection:'row',color:'white',width:'100%',padding:8, backgroundColor:'#B10000'}}>
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -135,7 +131,7 @@ ABOUT US
 	<Text style={{color:'white'}} >Live</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -157,7 +153,7 @@ ABOUT US
 <Text style={{color:'white'}} >Programs</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -180,9 +176,17 @@ ABOUT US
 
 	</View>
 
+<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>
+<Image     source={require('../images/menu.png')} />
+</TouchableHighlight>
+
+<Text style={{color:'white'}} >Menu</Text>
+
 	</View>
 
- 
+	</View>
+
  
   </View>
      

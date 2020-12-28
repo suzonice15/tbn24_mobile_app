@@ -111,16 +111,18 @@ ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_des
 	
 	render(){
   return (  
-      <View>
-  <View style={{flex:1,flexDirection:'row',width:'100%',position:'absolute',top:0,right:0, backgroundColor:'#B10000'}} >
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginLeft:15,marginTop:20}}  source={require('../images/menu.png')} />	
-	</TouchableHighlight>
-	</View>
-	<ScrollView style={{marginTop:80,marginBottom:80}}>
    
-<View style={{margin:5,flex:1,flexDirection:'column'}}>
+    <View style={{flex:100,width:"100%"}}> 	
+  <View style={{flex:15,width:"100%",marginTop:0, backgroundColor:'#B10000'}}> 
+ 	 <Image  style={styles.logo}  source={require('../images/logo.png')} /> 
+	
+	</View>
+	
+	
+	 <View style={{flex:77,width:"100%",backgroundColor:'white',margin:5}}>
+	<ScrollView>
+   
+<View style={{margin:5,padding:10,flex:1,flexDirection:'column'}}>
 
 
 
@@ -131,12 +133,7 @@ ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_des
 		 }
 		  </View>
 
- 
- { 	this.state.loading ?
-	     <View  style={{marginTop:300}}>		 
-		
-		  </View>:null	
- }		  
+    
  
  <FlatList  numColumns={1} data={this.state.Data}   keyExtractor={item =>item.post_id.toString()} renderItem={({item})=><this.ChildView post_id={item.post_id} post_title={item.post_title} post_name={item.post_name} post_picture={item.post_picture} post_description={item.post_description} post_created_date={item.post_created_date} post_view={item.post_view}   />} />
 
@@ -144,11 +141,14 @@ ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_des
 
 
 	</ScrollView>
+	</View>
 
 
 	 
-		<View style={{flex:9,position:'absolute',color:'white',bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+		
+  
+ <View style={{flex:8,flexDirection:'row',color:'white',width:'100%',padding:8, backgroundColor:'#B10000'}}>
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -172,7 +172,7 @@ ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_des
 	<Text style={{color:'white'}} >Live</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -194,7 +194,7 @@ ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_des
 <Text style={{color:'white'}} >Programs</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -217,9 +217,17 @@ ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_des
 
 	</View>
 
+<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>
+<Image     source={require('../images/menu.png')} />
+</TouchableHighlight>
+
+<Text style={{color:'white'}} >Menu</Text>
+
 	</View>
 
- 
+	</View>
+
  
   </View>
      

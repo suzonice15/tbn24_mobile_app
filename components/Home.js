@@ -78,22 +78,14 @@ sideMenuShow=()=>{
   return ( 
   
   
-    <ScrollView> 	
-  <View style={{flex:10,flexDirection:'row',marginTop:0, backgroundColor:'#B10000'}}> 
-<View style={{flex:8}}>  
-	 <Image  style={styles.logo}  source={{uri:'https://www.tbn24.com/public/logo.png'}} />
-	 </View>
-	<View style={{flex:2}}> 
-	<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>	
-	<Image   style={{width:50,marginTop:20}}  source={require('../images/menu.png')} />
-	
-	</TouchableHighlight>
-	</View> 
+    <View style={{flex:100,width:"100%"}}> 	
+  <View style={{flex:15,width:"100%",marginTop:0, backgroundColor:'#B10000'}}> 
+ 	 <Image  style={styles.logo}  source={require('../images/logo.png')} /> 
 	
 	</View>
 	
 	
-	 <View style={{backgroundColor:'white',margin:5}}>
+	 <View style={{flex:77,width:"100%",backgroundColor:'white',margin:5}}>
 		 {
 			this.state.loading ?
 	     <ActivityIndicator  style={{fontSize:30,marginTop:100}}size="large" color="red" />:null
@@ -118,14 +110,11 @@ sideMenuShow=()=>{
 		 />
 		 }
  </View> 
- {
-			this.state.loading ?
- <View style={{marginTop:375}}></View>:<View style={{marginTop:210}}></View>
- }
   
   
- <View style={{flex:9,position:'absolute',color:'white',marginTop:50,bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',height:80, backgroundColor:'#B10000'}}>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+  
+ <View style={{flex:8,flexDirection:'row',color:'white',width:'100%',padding:8, backgroundColor:'#B10000'}}>
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -149,7 +138,7 @@ sideMenuShow=()=>{
 	<Text style={{color:'white'}} >Live</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -171,7 +160,7 @@ sideMenuShow=()=>{
 <Text style={{color:'white'}} >Programs</Text>
 
 	</View>
-	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
+	<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
 <TouchableHighlight  underlayColor='none' onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -194,10 +183,19 @@ sideMenuShow=()=>{
 
 	</View>
 
+<View style={{flex:2,justifyContent:'center','alignItems':'center'}} >
+<TouchableHighlight  underlayColor='none' onPress={this.sideMenuShow}>
+<Image     source={require('../images/menu.png')} />
+</TouchableHighlight>
+
+<Text style={{color:'white'}} >Menu</Text>
+
+	</View>
+
 	</View>
 
    
-  </ScrollView>
+  </View>
      
   );
 	}
