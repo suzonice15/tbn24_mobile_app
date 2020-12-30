@@ -50,7 +50,13 @@ class Program  extends Component {
 	 			this.setState({Data:response,loading:false,refressicon:false});
 		}).catch((error)=>{
 			this.setState({loading:false,refressicon:false});
-			Alert.alert("Internet Problem"); 
+			
+			 Alert.alert(
+      'No Internet Connection',
+      'You need to be connected to your network or Wi-Fi');
+			  
+
+			
 		});
 		
 	}
@@ -70,10 +76,7 @@ class Program  extends Component {
 		});
 	
 	}
-	singleProgram=(program_id)=>{
-		
-		Alert.alert(program_id)
-	}
+	 
 	
 	
 	   
@@ -81,6 +84,7 @@ class Program  extends Component {
 		 return(
 		   <View >
 		 <TouchableHighlight 
+		 underlayColor='none'
 		  onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -112,7 +116,7 @@ class Program  extends Component {
 		 </View>
 		  <View style={{flex:2,backgroundColor:'#B10000',margin:5}}>
 		 
-		 	 <Text style={{color:'white',textAlign:'center',height:50,fontSize:18}}>{program_name}</Text>		 
+		 	 <Text style={{color:'white',textAlign:'center',height:40,fontSize:16}}>{program_name}</Text>		 
 		  
 		 </View>	   	 
 	
@@ -134,30 +138,26 @@ class Program  extends Component {
 	 
 	</View> 
 	  
-<View style={{flex:75,width:'100%'}}>
+<View style={{flex:76,width:'100%',}}>
 
-        <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
+        <Text style={{fontSize:25,color:'black',textAlign:'center',}}>
 Our Programs
 </Text>      
  
   
  
 
-	   <View>
- { 	this.state.loading ?
+  { 	this.state.loading ?
 	     <ActivityIndicator  style={{fontSize:30,marginTop:100}}size="large" color="red" />:null		 
 		 }
-		  </View>	
-  
+		   
 		
  
 
  
  <FlatList   numColumns={2} data={this.state.Data}   keyExtractor={item =>item.id.toString()} renderItem={({item})=><this.ChildView program_details={item.program_details} program_id={item.id} program_name={item.program_name} program_image={item.program_image}   />} />
      
-  </View>	   
-	   
-	    
+  </View>	  	    
  
   <View style={{flex:8,flexDirection:'row',color:'white',marginTop:50,bottom:0,width:'100%',padding:10,left:0,flexDirection:'row',  backgroundColor:'#B10000'}}>
 	<View style={{flex:3,justifyContent:'center','alignItems':'center'}} >
@@ -253,10 +253,7 @@ Our Programs
 
 const styles = StyleSheet.create({
 	 
-   backgroundVideo: {
-    position: 'relative',
-	height:300    
-  },
+   
   logo:{
 		width:300,
 		height:80,

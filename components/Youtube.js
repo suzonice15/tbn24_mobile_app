@@ -36,9 +36,20 @@ class Youtube  extends Component {
 			refressicon:true,
 			status:'',
 			quality:'',
-			error:''
+			error:'',
+			PopularVideo:[]
 
 		}
+	}
+	componentDidMount(){
+		var URL="https://www.tbn24.com/api/popularVideo";
+		var config={method:'GET'}
+		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
+	 			this.setState({PopularVideo:response});
+		}).catch((error)=>{
+			this.setState({loading:false,refressicon:false});
+			Alert.alert("Internet Problem"); 
+		});
 	}
 	 
 	
@@ -54,6 +65,55 @@ class Youtube  extends Component {
 			}
 		});	
 	}
+
+	PopularChildView=({title,picture,videoId})=>{
+		return(
+		  <View>
+		<TouchableHighlight   
+		 underlayColor='none'
+		 onPress={()=>{
+
+	   Navigation.push(this.props.componentId, {
+		   component: {
+			   name: 'YouTubePage', // Push the screen registered with the 'Settings' key
+			   options: { // Optional options object to configure the screen
+				   topBar: {
+					   title: {
+						   text: `${title}` // Set the TopBar title of the new Screen
+					   }
+				   }
+			   },
+				   passProps: {
+	 youtubeVideoId:`${videoId}`,
+	
+	 
+   }
+		   }
+	   })
+   }}
+		>
+		<View style={{flexDirection:'column',backgroundColor:'#B10000',width:185,margin:5}}>
+		 <View>
+		
+		 
+	<Image source={{uri:picture}}  style={{height:180,padding:5,width:"100%"}}/>
+		 
+		</View>
+		 <View style={{backgroundColor:'#B10000',margin:5}}>
+		
+			 <Text style={{color:'white',textAlign:'center',height:40,fontSize:16}}>{title}</Text>		 
+		 
+		</View>	   	 
+   
+		</View>
+		 </TouchableHighlight>
+					</View>
+
+		
+		)
+	}
+   
+	  
 	  
 	 
 	
@@ -86,7 +146,14 @@ class Youtube  extends Component {
 />
 
 	 
-	  
+<ScrollView style={{marginTop:0,height:'80%'}} >  
+  <Text style={styles.videoHeading}>Popular Videos	</Text>	 
+		 
+	    
+ 
+ <FlatList  numColumns={2} data={this.state.PopularVideo}   keyExtractor={item =>item.videoId.toString()} renderItem={({item})=><this.PopularChildView title={item.title} videoId={item.videoId} picture={item.picture}     />} /> 
+
+ </ScrollView>
 	 
  	  
 	  </View>
@@ -185,10 +252,16 @@ class Youtube  extends Component {
 
 const styles = StyleSheet.create({
 	 
-   backgroundVideo: {
-    position: 'relative',
-	height:300    
-  },
+  	 
+	videoHeading: {
+		fontSize:18,color:'black',
+		textAlign:'center',
+		backgroundColor:'red',
+		color:'white',
+		marginTop:5,
+		padding:2,
+		width:'100%'
+	 },
   logo:{
 		width:300,
 		height:80,

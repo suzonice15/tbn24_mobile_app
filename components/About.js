@@ -81,7 +81,7 @@ class About  extends Component {
 	
 	 <View style={{flex:77,width:"100%",backgroundColor:'white',margin:5}}>
 	<ScrollView style={{marginTop:0}}>
-   <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
+   <Text style={{fontSize:25,color:'black',textAlign:'center'}}>
 	{this.state.pageTitle}
 </Text>
  {
@@ -91,7 +91,7 @@ class About  extends Component {
 		 }
 		
 
-<Text style={{textAlign:'left',paddingLeft:10,color:'black',margin:8,fontSize:19}}>
+<Text style={{textAlign:'left',paddingLeft:10,color:'black',margin:5,fontSize:15}}>
 
 	{this.state.pageDescription}
 	

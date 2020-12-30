@@ -66,6 +66,7 @@ ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_des
 		 return(	
 <View style={{margin:2,flex:1}}>
  <TouchableHighlight 
+   underlayColor='none'
 		  onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -94,11 +95,21 @@ ChildView=({post_id,post_created_date,post_title,post_name,post_picture,post_des
 		 >
 		 <View>
 <Image style={{width:'100%',height:260}}  source={{uri:'https://www.tbn24.com/public/uploads/post/'+post_picture}} />
-<View style={{backgroundColor:'#ddd',marginBottom:20,padding:10}}>
-<Text style={{color:'color',fontSize:20,textAlign:'left'}} >{post_title}</Text>
-<Text style={{color:'color',fontSize:18,textAlign:'center'}} >{moment({post_created_date}).format('Do MMMM YYYY')} 
-               |    Viewed: {post_view} </Text>
-<Text style={{color:'color',fontSize:16,textAlign:'left'}}>{post_description.replace(/(<([^>]+)>)/gi, "").substring(0, 160)}.....
+<View style={{backgroundColor:'#ddd',marginBottom:10,padding:10}}>
+<Text style={{color:'black',fontSize:18,textAlign:'left'}} >{post_title}</Text>
+<View style={{flex:4,flexDirection:'row',marginBottom:0}}>
+
+<View style={{flex:2}}>
+<Text style={{color:'green',fontSize:16,textAlign:'center'}} >{moment({post_created_date}).format('Do MMMM YYYY')} 
+                 </Text>
+
+</View>
+<View style={{flex:2}}>
+<Text style={{color:'green',fontSize:16,textAlign:'center'}} >Viewed: {post_view} </Text>
+					 </View>
+ </View>
+
+<Text style={{color:'black',fontSize:15,textAlign:'left'}}>{post_description.replace(/(<([^>]+)>)/gi, "").substring(0, 185)}.....
 </Text>
 </View>
  </View>

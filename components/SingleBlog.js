@@ -6,6 +6,8 @@
  * @flow strict-local
  */
 import { Navigation } from "react-native-navigation";
+import moment from 'moment';
+
 
 import React,{Component} from 'react';
 import {
@@ -37,12 +39,68 @@ import CommentForm from "./CommentForm";
 		 email:'',		
 		 post_id:'',
 		 comment_id:0,
-		 message:''
+		 message:'',
+		 success:''
 		}
 		    this.subCommentForm = this.subCommentForm.bind(this);
 	}
 	 
-	 
+	
+
+	subCommentStore=()=>{	 
+	
+		 
+		if(this.state.message==""){
+			 Alert.alert('Enter Your Comment')
+			return false;
+		}
+		
+		if(this.state.name==""){
+			 Alert.alert('Enter Your Name')
+			return false;
+		}
+		 if(this.state.email==""){
+			 Alert.alert('Enter Your Email')
+			return false;
+		}
+		
+		let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+ if (reg.test(this.state.email) === false) {
+		 Alert.alert('Enter Valid Email')
+	
+   return false;
+ }
+		
+		let URL='https://www.tbn24.com/api/subComment/store';
+		let configHeader={
+			Accept:'application/json',
+			'Content-Type':'application/json'
+		}
+		let configBody=JSON.stringify({
+			name:this.state.name,
+			email:this.state.email,
+			post_id:this.state.post_id,
+			comment_id:this.state.comment_id,
+
+			comments:this.state.message			 
+		});
+		let config={method:'POST',headers:configHeader,body:configBody}
+		fetch(URL,config).then((response)=>response.text())
+		.then((responsData)=>{
+			this.setState({name:''});
+			this.setState({email:''});
+			this.setState({message:''});
+			this.commentByPostId()
+
+			  
+			  this.setState({success:responsData});
+
+		}).catch((erorr)=>{
+			Alert.alert('Something is Wrong')
+		})
+		
+	}
+
 	 mainCommentStore=()=>{	 
 	
 		 
@@ -81,7 +139,16 @@ import CommentForm from "./CommentForm";
 		 let config={method:'POST',headers:configHeader,body:configBody}
 		 fetch(URL,config).then((response)=>response.text())
 		 .then((responsData)=>{
- 			  Alert.alert(responsData)
+			this.setState({name:''});
+			this.setState({email:''});
+			this.setState({message:''});
+			this.commentByPostId()
+
+
+			this.setState({success:responsData});
+
+			  
+			 
 		 }).catch((erorr)=>{
 			 Alert.alert('Something is Wrong')
 		 })
@@ -91,11 +158,18 @@ import CommentForm from "./CommentForm";
 	
 	  
 	   componentDidMount=()=>{
+	
+		this.commentByPostId()
 		
-	 let URL="https://www.tbn24.com/api/selectBlogComment/"+this.props.post_id;
+	}
+
+	commentByPostId=()=>{
+	
+		let URL="https://www.tbn24.com/api/selectBlogComment/"+this.props.post_id;
 		let config={method:'GET'}
 		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
-	 			this.setState({comments:response});
+				 this.setState({comments:response});
+				 
 		}).catch((error)=>{			 
 			Alert.alert("Internet Problem"); 
 		});
@@ -103,11 +177,8 @@ import CommentForm from "./CommentForm";
 		
 		this.setState({
 			post_id:this.props.post_id,
-			name:"anisur rohman",
-		email:"anisur@gmail.com"
+			 
 			})
-		
-	 
 	}
 	
 	sideMenuShow=()=>{	
@@ -135,30 +206,57 @@ import CommentForm from "./CommentForm";
 		<TextInput
 		
 onChangeText={(value)=>this.setState({name:value})}
-        style={{ margin: 15,
-      height: 50,fontSize:20,
-      borderColor: 'black',
-      borderWidth: 2}}
-        placeholder="Enter Your Name"
+style={ {
+	margin: 3,
+	height: 35,
+	padding:5,
+	alignItems:'center',
+	fontSize:20,
+	borderColor: 'black',
+	borderWidth: 1 
+  }} 
+		placeholder="Enter Your Name"
+		value={this.state.name}
          
       />
 	  <TextInput
 	  onChangeText={(value)=>this.setState({email:value})}
-        style={{ margin: 15,
-      height: 50,fontSize:20,
-      borderColor: 'black',
-      borderWidth: 2}}
-        placeholder="Enter Your Email"
+        style={ {
+			margin: 3,
+			height: 35,
+			padding:5,
+			alignItems:'center',
+			fontSize:20,
+			borderColor: 'black',
+			borderWidth: 1 
+		  }}
+		placeholder="Enter Your Email"
+		value={this.state.email}
          
       />
 	  <TextInput
 	  onChangeText={(value)=>this.setState({message:value})}
     multiline={true}
 	 placeholder="Enter Your Comment"
-    numberOfLines={10}
-    style={{fontSize:20, margin: 15,height:200,   borderColor: 'black',
-      borderWidth: 2,textAlignVertical: 'top',}}/>
-	  <Button  onPress={this.mainCommentStore} title="Submit Now" ></Button>  
+	numberOfLines={5}
+	value={this.state.message}
+	style={{fontSize:20,margin:3,height:100,   borderColor: 'black',
+	borderWidth: 1,textAlignVertical: 'top',}} />
+	   
+
+	  <TouchableHighlight  underlayColor='none' onPress={this.subCommentStore}>
+<Text style={{
+	fontSize:18,
+	borderColor: 'red',
+	padding:5,
+	color:'white',
+	borderWidth:1,
+	backgroundColor:'red',
+	textAlign: 'center',
+}
+	
+}  >Replay Now</Text>
+</TouchableHighlight>
 		
 		</View>
 		
@@ -168,6 +266,7 @@ onChangeText={(value)=>this.setState({name:value})}
 	 
 	
 	render(){
+		let post_created_date=this.props.post_created_date
   return (  
      
     <View style={{flex:100,width:"100%"}}> 	
@@ -189,43 +288,63 @@ onChangeText={(value)=>this.setState({name:value})}
 <Image style={{width:'100%',height:260}}  source={{uri:'https://www.tbn24.com/public/uploads/post/'+this.props.post_picture}} />
 <View style={{backgroundColor:'#ddd',marginBottom:20,padding:10}}>
 
- <Text style={{color:'color',fontSize:20,textAlign:'left'}} >{this.props.post_title}   </Text>
-<Text style={{color:'color',fontSize:18,textAlign:'center'}} >{this.props.post_created_date}
-      |  Viewed: {this.props.post_view} </Text>
+ <Text style={{color:'color',fontSize:18,textAlign:'left'}} >{this.props.post_title}   </Text>
+ 
+
+
+	  <View style={{flex:4,flexDirection:'row',marginBottom:0}}>
+
+<View style={{flex:2}}>
+<Text style={{color:'green',fontSize:16,textAlign:'center'}} >{moment({post_created_date}).format('Do MMMM YYYY')}
+                 </Text>
+
+</View>
+<View style={{flex:2}}>
+<Text style={{color:'green',fontSize:16,textAlign:'center'}} >Viewed: {this.props.post_view} </Text>
+					 </View>
+ </View>
 <Text style={{color:'color',fontSize:16,textAlign:'left'}}>{this.props.post_description.replace(/(<([^>]+)>)/gi, "")}
 </Text>
 </View>
 </View>
 </View>
 
-<View style={{margin:5,flex:1}}>
+<View style={{margin:5,flex:1,marginTop:0}}>
+
+	<View style={{padding:10,marginTop:0}}>
+
+	<Text style={{color:'color',fontSize:18,textAlign:'center',marginBottom:5,}}>Leave a Reply</Text>
 
 <TextInput
+
+
 onChangeText={(value)=>this.setState({name:value})}
-        style={{ margin: 15,
-      height: 50,fontSize:20,
-      borderColor: 'black',
-      borderWidth: 2}}
-        placeholder="Enter Your Name"
+style={styles.formField}
+		placeholder="Enter Your Name"
+		value={this.state.name}
          
       />
 	  <TextInput
 	  onChangeText={(value)=>this.setState({email:value})}
-        style={{ margin: 15,
-      height: 50,fontSize:20,
-      borderColor: 'black',
-      borderWidth: 2}}
-        placeholder="Enter Your Email"
+      style={styles.formField}
+		placeholder="Enter Your Email"
+		value={this.state.email}
          
       />
 	  <TextInput
 	  onChangeText={(value)=>this.setState({message:value})}
     multiline={true}
 	 placeholder="Enter Your Comment"
-    numberOfLines={10}
-    style={{fontSize:20, margin: 15,height:200,   borderColor: 'black',
-      borderWidth: 2,textAlignVertical: 'top',}}/>
-	  <Button  onPress={this.mainCommentStore} title="Submit Now" ></Button> 
+	numberOfLines={10}
+	value={this.state.message}
+    style={{fontSize:20,margin:3,height:100,   borderColor: 'black',
+      borderWidth: 1,textAlignVertical: 'top',}} />
+	 
+	    
+	  <TouchableHighlight  underlayColor='none' onPress={this.mainCommentStore}>
+<Text style={styles.submit}  >Submit Now</Text>
+</TouchableHighlight>
+ 	  
 	  
 	  <View style={{margin:5}}>
 
@@ -265,7 +384,7 @@ onChangeText={(value)=>this.setState({name:value})}
 		  )}
 	   
 	   
-	  
+	   </View> 
 	  </View>
 	  
 	  
@@ -372,10 +491,24 @@ onChangeText={(value)=>this.setState({name:value})}
 
 const styles = StyleSheet.create({
 	 
-   backgroundVideo: {
-    position: 'relative',
-	height:300    
-  },
+	formField: {
+		margin: 3,
+		height: 35,
+		padding:5,
+		alignItems:'center',
+		fontSize:20,
+		borderColor: 'black',
+		borderWidth: 1 
+	  },
+	  submit:{
+		fontSize:18,
+		borderColor: 'red',
+		padding:5,
+		color:'white',
+		borderWidth:1,
+		backgroundColor:'red',
+		textAlign: 'center',
+	  },
   logo:{
 		width:300,
 		height:80,

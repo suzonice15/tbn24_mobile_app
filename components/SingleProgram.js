@@ -99,7 +99,7 @@ class SingleProgram  extends Component {
 		 </View>
 		  <View style={{backgroundColor:'#B10000',margin:5}}>
 		 
-		 	 <Text style={{color:'white',textAlign:'center',height:50,fontSize:18}}>{title}</Text>		 
+		 	 <Text style={{color:'white',textAlign:'center',height:40,fontSize:16}}>{title}</Text>		 
 		  
 		 </View>	   	 
 	
@@ -130,17 +130,17 @@ class SingleProgram  extends Component {
             
 	   <ScrollView  >  
 
-   <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>
+   <Text style={{fontSize:20,color:'black',textAlign:'center',marginTop:0}}>
 	   {this.props.programName}   
 	   
 	   </Text> 
 	   	    
   
 	   <View style={{ margin:10}}>
-	   <Image style={{width:'100%',height:250}} source={{uri:'https://www.tbn24.com/public/uploads/program/'+this.props.program_image}} />
+	   <Image style={{width:'100%',height:350,borderWidth:2,padding:50,borderColor:'#ddd'}} source={{uri:'https://www.tbn24.com/public/uploads/program/'+this.props.program_image}} />
 	   
 	  
-	   <Text style={{fontSize:18,color:'black',textAlign:'center',marginTop:5}}>
+	   <Text style={{fontSize:17,color:'black',textAlign:'center',marginTop:5}}>
 	   {this.props.programDescription}
  	   
 	   </Text> 
@@ -149,10 +149,10 @@ class SingleProgram  extends Component {
 		
 		 <View style={{ margin:10,borderColor:'red',borderWidth:1}}>
 	  
-	  <Text style={{color:'white',padding:10,fontSize:20,textAlign:'center',backgroundColor:'red'}}>
+	  <Text style={{color:'white',padding:5,fontSize:18,textAlign:'center',backgroundColor:'red'}}>
 	   Weekly Schedule List 
 	  </Text>
-	  		 <View style={{ flex:9,flexDirection:'row',textAlign:'center',justifyContent:'center',marginTop:5,marginLeft:5,marginRight:5}}>
+	  		 <View style={{ flex:9,flexDirection:'row',marginButton:2,textAlign:'center',justifyContent:'center',marginTop:5,marginLeft:5,marginRight:5}}>
 
             <View style={{ flex:2,borderWidth:1,borderColor:'red',textAlign:'center',}}>
 <Text style={{ padding:5}} >Date</Text>
@@ -190,7 +190,7 @@ class SingleProgram  extends Component {
 		<View>
 		 
 		<View  style={{color:'white',padding:10}}>
-		  <Text style={{color:'white',padding:10,fontSize:20,textAlign:'center',backgroundColor:'red'}}>
+		  <Text style={{color:'white',padding:10,fontSize:18,textAlign:'center',backgroundColor:'red'}}>
 	  Playlist Videos 
 	  </Text>
 	  </View>

@@ -63,13 +63,7 @@ class Videos  extends Component {
 			Alert.alert("Internet Problem"); 
 		});
 		
-		var URL="https://www.tbn24.com/api/playlistVideo";
-		var config={method:'GET'}
-		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
-	 			this.setState({PlaylistVideo:response,loading:false});
-		}).catch((error)=>{
- 
- });
+	
 		
 		 var URL="https://www.tbn24.com/api/allVideos";
 		var config={method:'GET'}
@@ -78,6 +72,14 @@ class Videos  extends Component {
 		}).catch((error)=>{
  			 
 		});
+
+		var URL="https://www.tbn24.com/api/playlistVideo";
+		var config={method:'GET'}
+		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
+	 			this.setState({PlaylistVideo:response,loading:false});
+		}).catch((error)=>{
+ 
+ });
 		
 		
 		
@@ -103,7 +105,7 @@ class Videos  extends Component {
 		 return(
 		   <View>
 		 <TouchableHighlight   
-		 
+		  underlayColor='none'
 		  onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -135,7 +137,7 @@ class Videos  extends Component {
 		 </View>
 		  <View style={{backgroundColor:'#B10000',margin:5}}>
 		 
-		 	 <Text style={{color:'white',textAlign:'center',height:50,fontSize:18}}>{title}</Text>		 
+		 	 <Text style={{color:'white',textAlign:'center',height:40,fontSize:16}}>{title}</Text>		 
 		  
 		 </View>	   	 
 	
@@ -152,7 +154,7 @@ class Videos  extends Component {
 		 return(
 		   <View>
 		 <TouchableHighlight   
-		 
+		  underlayColor='none'
 		  onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -183,7 +185,7 @@ class Videos  extends Component {
 		 </View>
 		  <View style={{backgroundColor:'#B10000',margin:5}}>
 		 
-		 	 <Text style={{color:'white',textAlign:'center',height:50,fontSize:18}}>{title}</Text>		 
+		 	 <Text style={{color:'white',textAlign:'center',height:40,fontSize:16}}>{title}</Text>		 
 		  
 		 </View>	   	 
 	
@@ -200,7 +202,7 @@ class Videos  extends Component {
 		 return(
 		   <View>
 		 <TouchableHighlight   
-		 
+		  underlayColor='none'
 		  onPress={()=>{
 
 		Navigation.push(this.props.componentId, {
@@ -231,7 +233,7 @@ class Videos  extends Component {
 		 </View>
 		  <View style={{backgroundColor:'#B10000',margin:5}}>
 		 
-		 	 <Text style={{color:'white',textAlign:'center',height:50,fontSize:18}}>{title}</Text>		 
+		 	 <Text style={{color:'white',textAlign:'center',height:40,fontSize:16}}>{title}</Text>		 
 		  
 		 </View>	   	 
 	
@@ -261,7 +263,7 @@ class Videos  extends Component {
 	    
             
 	   <ScrollView style={{marginTop:0,height:'80%'}} >  
-  <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>Popular Videos	</Text>	 
+  <Text style={styles.videoHeading}>Popular Videos	</Text>	 
 		 
 	     <View>
  { 	this.state.loading ?
@@ -273,7 +275,7 @@ class Videos  extends Component {
 
 
  { 	this.state.loading ?
-	     null: <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}>Playlist Videos	</Text>	 
+	     null: <Text style={styles.videoHeading}>Playlist Videos	</Text>	 
 		 }
 
 <FlatList  numColumns={2} data={this.state.PlaylistVideo}   keyExtractor={item =>item.playlist.toString()} renderItem={({item})=><this.PlaylistChildView title={item.title} playlist={item.playlist} picture={item.picture}     />} />
@@ -282,7 +284,7 @@ class Videos  extends Component {
 
 
  { 	this.state.loading ?
-	     null: <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center',marginTop:5}}> Videos	</Text>	 
+	     null: <Text style={styles.videoHeading}> Videos	</Text>	 
 		 }
  
  <FlatList onRefresh={()=>this.PullRefresh()} refreshing={this.state.refressicon} numColumns={2} data={this.state.Data}   keyExtractor={item =>item.index.toString()} renderItem={({item})=><this.ChildView title={item.title} videoId={item.videoId} picture={item.picture}     />} />
@@ -384,10 +386,15 @@ class Videos  extends Component {
 
 const styles = StyleSheet.create({
 	 
-   backgroundVideo: {
-    position: 'relative',
-	height:300    
-  },
+   videoHeading: {
+	   fontSize:18,color:'black',
+	   textAlign:'center',
+	   backgroundColor:'red',
+	   color:'white',
+	   marginTop:0,
+	   padding:2,
+	   width:'98%'
+	},
   logo:{
 		width:300,
 		height:80,

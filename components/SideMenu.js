@@ -8,7 +8,8 @@ import {
 	BackHandler,
 	Alert,
 	Platform,
-	Linking
+	Linking,
+	StyleSheet
 	
 } from 'react-native';
 
@@ -16,18 +17,12 @@ import { Navigation } from "react-native-navigation";
 
 class SideMenu  extends Component {
 
-   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.backAction);
-  }
-
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.backAction);
-  }
+    
      openStore = () => {
     //This is the main trick
     if (Platform.OS != 'ios') {
       Linking.openURL(
-        `https://apps.apple.com/us/app/somoy-tv/id1234444890#?platform=iphone`,
+        `https://play.google.com/store/apps/details?id=com.tbn.live&hl=bn&gl=US`,
       ).catch(
           (err) => alert('Please check for Google Play Store')
       );
@@ -37,8 +32,7 @@ class SideMenu  extends Component {
       ).catch((err) => alert('Please check for the App Store'));
     }
   };
-
-  backAction = () => {
+   backAction = () => {
     Alert.alert(
       'Exit',
       'Do you want to close this App ?',
@@ -329,11 +323,11 @@ render(){
 			 <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/about-us.png')} />
+	 <Image   style={styles.sideImage}   source={require('../images/about-us.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
-<Text  onPress={this.About} style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}} >ABOUT US</Text>
+<Text  onPress={this.About} style={styles.sideMenuTitle} >About US</Text>
 
 	 </View>
 	 
@@ -347,12 +341,12 @@ render(){
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/contact.png')} />
+	 <Image   style={styles.sideImage}   source={require('../images/contact.png')} />
 	 </View>
 	 
 	 
 	 <View style={{flex:5}}>
-<Text onPress={this.Contact} style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}}>Contact  Us</Text>
+<Text onPress={this.Contact} style={styles.sideMenuTitle}>Contact  Us</Text>
 
 	 </View>
 	 
@@ -361,12 +355,12 @@ render(){
 	    <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	  <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/term.png')} />
+	 <Image   style={styles.sideImage}   source={require('../images/term.png')} />
 	 </View>
 	 
 	 
 	 <View style={{flex:5}}>
-<Text onPress={this.TearmsCondition} style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}} >Terms and Conditions</Text>
+<Text onPress={this.TearmsCondition} style={styles.sideMenuTitle} >Terms and Conditions</Text>
 
 	 </View>
 	 
@@ -375,12 +369,12 @@ render(){
 			  <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/privacy-policy.png')} />
+	 <Image   style={styles.sideImage}   source={require('../images/privacy-policy.png')} />
 	 </View>
 	 
 	 
 	 <View style={{flex:5}}>
-<Text onPress={this.PrivacyPolicy} style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}}>Privacy Policy</Text>
+<Text onPress={this.PrivacyPolicy} style={styles.sideMenuTitle}>Privacy Policy</Text>
 
 	 </View>
 	 
@@ -389,12 +383,12 @@ render(){
      <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/program_menu.png')} />
+	 <Image   style={styles.sideImage}   source={require('../images/program_menu.png')} />
 	 </View>
 	 
 	 
 	 <View style={{flex:5}}>
-	 <Text onPress={this.Program} style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}} >Our Programs</Text>
+	 <Text onPress={this.Program} style={styles.sideMenuTitle} >Our Programs</Text>
 	 </View>
 	 
      </View>
@@ -402,12 +396,12 @@ render(){
 	  <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	  <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/calendar.png')} />
+	 <Image   style={styles.sideImage}   source={require('../images/calendar.png')} />
 	 </View>
 	 
 	 
 	 <View style={{flex:5}}>
-<Text onPress={this.Shedule} style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}} >
+<Text onPress={this.Shedule} style={styles.sideMenuTitle} >
 Today's Schedule
 </Text>
 	 </View>
@@ -419,12 +413,12 @@ Today's Schedule
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/user.png')} />
+	 <Image   style={styles.sideImage}   source={require('../images/user.png')} />
 	 </View>
 	 
 	 
 	 <View style={{flex:5}}>
-<Text onPress={this.Login}  style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}} >Login</Text>
+<Text onPress={this.Login}  style={styles.sideMenuTitle} >Login</Text>
 
 	 </View>
 	 
@@ -433,11 +427,11 @@ Today's Schedule
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	   
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/user.png')} />
+	 <Image   style={styles.sideImage}   source={require('../images/user.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
-<Text onPress={this.Registration} style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}} >Registration</Text>
+<Text onPress={this.Registration} style={styles.sideMenuTitle} >Registration</Text>
 	 </View>
 	 
      </View>
@@ -445,11 +439,11 @@ Today's Schedule
 	 <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/play.png')} />
+	 <Image   style={styles.sideImage}   source={require('../images/play.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
-<Text  onPress={this.Video} style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}}>Videos</Text>
+<Text  onPress={this.Video} style={styles.sideMenuTitle}>Videos</Text>
 
 	 </View>
 	 
@@ -458,11 +452,11 @@ Today's Schedule
 	  <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/blog.png')} />
+	 <Image   style={styles.sideImage}  source={require('../images/blog.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
-<Text    onPress={this.Blog}  style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}}>Blog</Text>
+<Text    onPress={this.Blog}  style={styles.sideMenuTitle}>Blog</Text>
 
 	 </View>
 	 
@@ -472,11 +466,11 @@ Today's Schedule
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/rating.png')} />
+	 <Image  style={styles.sideImage}   source={require('../images/rating.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
-<Text    onPress={this.openStore}  style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}}>Rate This App</Text>
+<Text    onPress={this.openStore}  style={styles.sideMenuTitle}>Rate This App</Text>
 
 	 </View>
 	 
@@ -486,11 +480,11 @@ Today's Schedule
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
 	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/share.png')} />
+	 <Image   style={styles.sideImage}  source={require('../images/share.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
-<Text    onPress={this.onShare}  style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}}>Share This App</Text>
+<Text    onPress={this.onShare}  style={styles.sideMenuTitle}>Share This App</Text>
 
 	 </View>
 	 
@@ -500,11 +494,11 @@ Today's Schedule
 	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
  <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image  style={{width:20,height:20}}   source={require('../images/cancel.png')} />
+	 <Image   style={styles.sideImage}  source={require('../images/cancel.png')} />
 	 </View>
 	 
 	 <View style={{flex:5}}>
-<Text    onPress={this.backAction}  style={{paddingLeft:15,marginTop:2,fontWeight:'bold',fontSize:18}}>Close</Text>
+<Text    onPress={this.backAction}  style={styles.sideMenuTitle}>Close</Text>
 
 	 </View>
 	 
@@ -523,5 +517,18 @@ Today's Schedule
 
 }
 
+const styles = StyleSheet.create({
+	 
+  sideMenuTitle:{
+	  paddingLeft:15,
+	  marginTop:2,
+ 	  fontSize:15,
+	  color:'black'
+  },
+  sideImage:{
+	  width:20,height:20
+  }
+   
+});
 
 export default SideMenu;

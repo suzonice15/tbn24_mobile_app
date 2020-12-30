@@ -145,7 +145,7 @@ sideMenuShow=()=>{
 	 	 <View style={{flex:77,width:"100%",backgroundColor:'white',margin:5}}>
 
 	    
-  <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
+  <Text style={{fontSize:25,color:'black',textAlign:'center',marginTop:-2}}>
 
 Today's Schedule
 </Text>

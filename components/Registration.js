@@ -110,56 +110,47 @@ sideMenuShow=()=>{
 	</View>
 	
 	
-	 <View style={{flex:77,width:"100%",backgroundColor:'white',margin:5}}> 
-	  <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'center',borderBottomWidth:1,paddingBottom:10}}>
+	 <View style={{flex:77,width:"100%",backgroundColor:'white'}}> 
+	  <Text style={{fontSize:20,color:'black',textAlign:'center',borderBottomWidth:1,paddingBottom:10}}>
 Registration Form</Text>
-  <ScrollView  >  
+  <ScrollView>  
  
 
+<View style={{margin:10}}>
 
-
-  <Text style={{fontSize:18,color:'black',fontWeight:'bold',textAlign:'left',paddingBottom:1,marginTop:5,marginLeft:18}}>
+  <Text  style={styles.fieldRow}>
  Full Name  </Text>
  
  <TextInput
  onChangeText={(value)=>this.setState({name:value})}
-        style={{ margin: 15,
-      height: 50,fontSize:20,
-      borderColor: 'black',
-      borderWidth: 2}}
+        style={styles.formField}
         placeholder="Enter Your  Full Name "
          
       />
-  <Text style={{fontSize:18,color:'black',fontWeight:'bold',textAlign:'left',paddingBottom:1,marginTop:5,marginLeft:18}}>
+  <Text  style={styles.fieldRow}>
  E-Mail Address 
  </Text>
  
  <TextInput
  onChangeText={(value)=>this.setState({email:value})}
-        style={{ margin: 15,
-      height: 50,fontSize:20,
-      borderColor: 'black',
-      borderWidth: 2}}
+ style={styles.formField}
         placeholder="Enter Your Email"
          
       />
 	  
 	  
-  <Text style={{fontSize:18,color:'black',fontWeight:'bold',textAlign:'left',paddingBottom:1,marginTop:5,marginLeft:18}}>
+  <Text  style={styles.fieldRow}>
  Phone   </Text>
  
  <TextInput
  onChangeText={(value)=>this.setState({phone:value})}
-        style={{ margin: 15,
-      height: 50,fontSize:20,
-      borderColor: 'black',
-      borderWidth: 2}}
+ style={styles.formField}
         placeholder="Enter Your  Phone  "
          
       />
 	  
 	  
-	   <Text style={{fontSize:18,color:'black',fontWeight:'bold',textAlign:'left',paddingBottom:1,marginTop:5,marginLeft:18}}>
+	   <Text style={styles.fieldRow}>
 Password </Text>
  
 	  
@@ -167,23 +158,25 @@ Password </Text>
 	   
 	   secureTextEntry={true}
 	   onChangeText={(value)=>this.setState({password:value})}
-        style={{ fontSize:20,margin: 15,
-      height: 50,
-      borderColor: 'black',
-      borderWidth: 2}}
+       style={styles.formField}
         placeholder="Enter Your Password"
          
       /> 
 	   
-	  <View style={{backgroundColor:'red',width:'93%',  marginBottom:15,marginLeft:15,marginTop: 5}} >  
-    <Button onPress={this.dataStore}  title="Registration Now" style={{fontSize:20,borderColor: 'black',
-      borderWidth: 2,backgroundColor:'red',textAlignVertical: 'top',}} />
+	  <View style={{backgroundColor:'red',width:'100%',  marginBottom:15,marginTop: 8}} >  
+ 
 	  
+
+      
+	 <TouchableHighlight  onPress={this.dataStore}  underlayColor='none' >
+<Text style={styles.submit}  >Registration Now</Text>
+</TouchableHighlight>
+	 
 	  </View>
 	  
 	  
 	  
-  
+	  </View>
   </ScrollView>
   
   </View>
@@ -283,11 +276,32 @@ Password </Text>
 }
 
 const styles = StyleSheet.create({
-	 
-   backgroundVideo: {
-    position: 'relative',
-	height:300    
-  },
+	submit:{
+		fontSize:18,
+		borderColor: 'red',
+		padding:5,
+		color:'white',
+		borderWidth:1,
+		backgroundColor:'red',
+		textAlign: 'center',
+	  },
+	  fieldRow:{
+		  fontSize:18,
+		  color:'black',
+		  textAlign:'left',
+		  paddingBottom:1,
+		  marginTop:5,
+		  marginLeft:2
+	  },
+	  formField: {
+		margin: 3,
+		height: 35,
+		padding:5,
+		alignItems:'center',
+		fontSize:20,
+		borderColor: 'black',
+		borderWidth: 1 
+	  },
   logo:{
 		width:300,
 		height:80,

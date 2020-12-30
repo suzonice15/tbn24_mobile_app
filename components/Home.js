@@ -15,16 +15,19 @@ import {
   ScrollView,
   View,
   Image,
+  TextInput,
   Text,
   TouchableHighlight,
   ActivityIndicator,
   FlatList,
-  StatusBar
+  TouchableOpacity,
+  Modal,
+  StatusBar,
+  Alert
 } from 'react-native';
  import Video from 'react-native-video';
  import {LivePlayer} from "react-native-live-stream";
- import Header from "./Header";
-
+ 
  
 
 class Home  extends Component {
@@ -35,7 +38,12 @@ class Home  extends Component {
 		Navigation.events().bindComponent(this)
 		this.state={
 			video:'', 			
-			loading:true, 			
+			loading:true, 
+			isVisible: false	,
+			loginNotice:'',		
+			registrationNotice:'',
+			email:'',
+			password:''
 		}
 	}
 	
@@ -58,7 +66,17 @@ class Home  extends Component {
 		}).catch((error)=>{
 			 
 			Alert.alert("Internet Problem"); 
-		});			
+		});	
+		
+			
+		let URLNotice="https://www.tbn24.com/api/modal/notice";
+		let configNotice={method:'GET'}
+		fetch(URLNotice,configNotice).then((result)=>result.json()).then((response)=>{	
+	 			this.setState({registrationNotice:response.five_minite,loginNotice:response.one_hour});
+		}).catch((error)=>{
+			 
+			 
+		});	
 	}
 	
 	
@@ -72,6 +90,57 @@ sideMenuShow=()=>{
 		});
 	
 	}	
+	displayModal(show){
+		this.setState({isVisible: show})
+	  }
+
+	  loginSubmit=()=>{
+
+if(this.state.email==''){
+	Alert.alert('Please Enter Your Email !')
+	return false;
+}
+if(this.state.password==''){
+	Alert.alert('Please Enter Your Password !')
+	return false;
+}
+ 
+let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+if (reg.test(this.state.email) === false) {
+		Alert.alert('Please Enter Your Valid Email !')
+   
+  return false;
+}
+
+
+let URL='https://www.tbn24.com/api/home/loginCheck';
+		 let configHeader={
+			 Accept:'application/json',
+			 'Content-Type':'application/json'
+		 }
+		 let configBody=JSON.stringify({
+		 
+			 email:this.state.email,
+			 password:this.state.password,
+ 			 
+		 });
+		 let config={method:'POST',headers:configHeader,body:configBody}
+		 fetch(URL,config).then((response)=>response.text())
+		 .then((responsData)=>{	
+			if(responsData.success=='ok'){
+				this.setState({isVisible: false})
+			} else {
+				Alert.alert("Your Email Or Password Invalid Try Again")
+			}
+			  
+		 }).catch((erorr)=>{
+			 Alert.alert('Something is Wrong')
+		 })
+		 
+	
+
+
+	  }
 	 
 	
 	render(){
@@ -85,7 +154,8 @@ sideMenuShow=()=>{
 	</View>
 	
 	
-	 <View style={{flex:77,width:"100%",backgroundColor:'white',margin:5}}>
+	 <View style={{flex:77,width:"100%", alignItems: 'stretch',backgroundColor:'white'}}>
+	 
 		 {
 			this.state.loading ?
 	     <ActivityIndicator  style={{fontSize:30,marginTop:100}}size="large" color="red" />:null
@@ -100,17 +170,84 @@ sideMenuShow=()=>{
    }}
    style={styles.backgroundVideo}
    paused={false}
-   muted={false}
-   bufferTime={1}
-   maxBufferTime={300}
+   muted={true}
+   bufferTime={300}
+   maxBufferTime={1000}
    resizeMode={"contain"}
    onLoading={()=>{}}
    onLoad={()=>{}}
    onEnd={()=>{}}
 		 />
 		 }
- </View> 
+
+<View style={{margin:100}}>
+<Modal
+            animationType = {"slide"}
+            transparent={false}
+            visible={this.state.isVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has now been closed.');
+            }}>
+
+<View style={{margin:10}}>
+              <Text style = { styles.text }>
+              {this.state.loginNotice}</Text>
+				  <Text  style={styles.fieldRow}>
+ E-Mail Address 
+ </Text>
+ 
+ <TextInput
+ onChangeText={(value)=>this.setState({email:value})}
+ style={styles.formField}
+        placeholder="Enter Your Email"
+         
+      /> 
   
+	  
+	  
+	   <Text style={styles.fieldRow}>
+Password </Text>
+ 
+	  
+	   <TextInput
+	   
+	   secureTextEntry={true}
+	   onChangeText={(value)=>this.setState({password:value})}
+       style={styles.formField}
+        placeholder="Enter Your Password"
+         
+      /> 
+	    
+
+	  <View style={{backgroundColor:'red',marginTop:5}} >  
+     
+	  <TouchableHighlight  underlayColor='none' 
+	  
+	  onPress={() => {
+		this.loginSubmit();}}
+	  >
+<Text style={styles.submit}  >Login</Text>
+</TouchableHighlight>
+
+</View>
+</View>
+
+               
+          </Modal>
+            
+          <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                this.displayModal(true);
+              }}>
+              <Text style={styles.buttonText}>Show Modal</Text>
+          </TouchableOpacity> 
+
+</View>
+
+      
+ </View> 
+   
   
   
  <View style={{flex:8,flexDirection:'row',color:'white',width:'100%',padding:8, backgroundColor:'#B10000'}}>
@@ -205,13 +342,84 @@ const styles = StyleSheet.create({
 	 
    backgroundVideo: {
     position: 'relative',
-	height:300 ,
+	height:310 ,
 marginTop:2	
   },
   logo:{
 		width:300,
 		height:80,
-		marginTop:2
+		marginTop:0
+	},
+	button: {
+		display: 'flex',
+		height: 60,
+		borderRadius: 6,
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: '100%',
+		backgroundColor: '#2AC062',
+		shadowColor: '#2AC062',
+		shadowOpacity: 0.5,
+		shadowOffset: { 
+		  height: 10, 
+		  width: 0 
+		},
+		shadowRadius: 25,
+	  },
+	  closeButton: {
+		display: 'flex',
+		height: 60,
+		borderRadius: 6,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#FF3974',
+		shadowColor: '#2AC062',
+		shadowOpacity: 0.5,
+		shadowOffset: { 
+		  height: 10, 
+		  width: 0 
+		},
+		shadowRadius: 25,
+	  },
+	  buttonText: {
+		color: '#FFFFFF',
+		fontSize: 22,
+	  },
+	  image: {
+		marginTop: 150,
+		marginBottom: 10,
+		width: '100%',
+		height: 350,
+	  },
+	  text: {
+		fontSize: 18,
+		marginBottom: 0,
+		padding: 20,
+	  },submit:{
+		fontSize:18,
+		borderColor: 'red',
+		padding:5,
+		color:'white',
+		borderWidth:1,
+		backgroundColor:'red',
+		textAlign: 'center',
+	  },
+	  fieldRow:{
+		fontSize:18,
+		color:'black',
+		textAlign:'left',
+		paddingBottom:1,
+		marginTop:5,
+		marginLeft:2
+	},
+	formField: {
+	  margin: 3,
+	  height: 40,
+	  padding:10,
+	  alignItems:'center',
+	  fontSize:20,
+	  borderColor: 'black',
+	  borderWidth: 1 
 	},
    
 });

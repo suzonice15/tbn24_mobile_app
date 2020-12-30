@@ -38,6 +38,24 @@ class Contact  extends Component {
 	 }
 	 }
 	 contactStore=()=>{
+
+
+		if(this.state.name==''){
+			Alert.alert('Enter Your Name')
+			return false;
+		}
+		if(this.state.email==''){
+			Alert.alert('Enter Your Email')
+			return false;
+		}
+		if(this.state.subject==''){
+			Alert.alert('Enter Your Subject')
+			return false;
+		}
+		if(this.state.message==''){
+			Alert.alert('Enter Your Message')
+			return false;
+		}
 		 let URL='https://www.tbn24.com/api/contact/store';
 		 let configHeader={
 			 Accept:'application/json',
@@ -80,19 +98,18 @@ sideMenuShow=()=>{
 	
 	</View> 
 	 
-	 <View style={{flex:77,width:"100%",backgroundColor:'white',margin:5}}>
-  <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
+	 <View style={{flex:77,width:"100%",marginTop:0,backgroundColor:'white'}}>
+ 
+
+<ScrollView>
+	<View style={{textAlign:'center',padding:10}}>
+<Text style={{fontSize:25,marginTop:-13,color:'black',textAlign:'center'}}>
 Contact With Us
 </Text>
 
-<ScrollView>
-
  
  <TextInput onChangeText={(value)=>this.setState({name:value})}
-        style={{ margin: 15,
-      height: 50,fontSize:20,
-      borderColor: 'black',
-      borderWidth: 2}}
+        style={styles.formField}
         placeholder="Enter Your Name"
          
       />
@@ -101,19 +118,13 @@ Contact With Us
 	   <TextInput
 	   
 	   onChangeText={(value)=>this.setState({email:value})}
-        style={{ fontSize:20,margin: 15,
-      height: 50,
-      borderColor: 'black',
-      borderWidth: 2}}
+	   style={styles.formField}
         placeholder="Enter Your Email"
          
       />
 	   <TextInput
 	   onChangeText={(value)=>this.setState({subject:value})}
-        style={{ fontSize:20,margin: 15,
-      height: 50,
-      borderColor: 'black',
-      borderWidth: 2}}
+	   style={styles.formField}
         placeholder="Subject Name"
          
       />
@@ -122,58 +133,59 @@ Contact With Us
 	  onChangeText={(value)=>this.setState({message:value})}
     multiline={true}
 	 placeholder="Enter Your Message"
-    numberOfLines={10}
-    style={{fontSize:20, margin: 15,height:200,   borderColor: 'black',
-      borderWidth: 2,textAlignVertical: 'top',}}/>
+    numberOfLines={5}
+    style={{fontSize:20,margin:3,height:100,   borderColor: 'black',
+      borderWidth: 1,textAlignVertical: 'top',}}/>
 	  
 	  
-	  <View style={{backgroundColor:'red',width:'93%', margin: 15}} >  
-    <Button onPress={this.contactStore} title="Send Message" style={{fontSize:20,borderColor: 'black',
-      borderWidth: 2,backgroundColor:'red',textAlignVertical: 'top',}} />
-	  
+	  <View style={{backgroundColor:'red',margin:2}} >  
+     
+	  <TouchableHighlight  underlayColor='none' onPress={this.contactStore}>
+<Text style={styles.submit}  >Send Message</Text>
+</TouchableHighlight>
 	  </View>
 	  
-	  <Text style={{fontSize:30,color:'black',fontWeight:'bold',textAlign:'center'}}>
+	  <Text style={{fontSize:25,color:'black',textAlign:'center'}}>
 Contact info 
 </Text>
 
  
-	  <View style={{backgroundColor:'white',flex:100, margin: 15,borderColor: 'black',
+	  <View style={{backgroundColor:'white',flex:100, borderColor: 'black',
       borderWidth: 1}} > 
 	  
 	  <View style={{backgroundColor:'white',borderBottomWidth:1,padding:10}} > 
-	    <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'left'}}>
+	    <Text style={{fontSize:20,color:'black',textAlign:'left'}}>
 Contact info 
 </Text>
 
- <Text style={{fontSize:20,color:'black',fontWeight:'normal',textAlign:'left'}}>
+ <Text style={{fontSize:17,color:'black',fontWeight:'normal',textAlign:'left'}}>
 37-19, 57th street
 woodside,NY-11377 United States 
 </Text>
  </View>   
    
 	  <View style={{backgroundColor:'white',borderBottomWidth:1,padding:10}} > 
-	    <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'left'}}>
+	    <Text style={{fontSize:20,color:'black',textAlign:'left'}}>
 Email
 </Text>
 
- <Text style={{fontSize:20,color:'black',fontWeight:'normal',textAlign:'left'}}>
+ <Text style={{fontSize:17,color:'black',fontWeight:'normal',textAlign:'left'}}>
  info@tban24.com 
 </Text>
  </View> 
    
 	  <View style={{backgroundColor:'white',borderBottomWidth:1,padding:10}} > 
-	    <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'left'}}>
+	    <Text style={{fontSize:20,color:'black',textAlign:'left'}}>
 Hotline </Text>
 
- <Text style={{fontSize:20,color:'black',fontWeight:'normal',textAlign:'left'}}>
+ <Text style={{fontSize:17,color:'black',fontWeight:'normal',textAlign:'left'}}>
  +1(718)808-9000 
 </Text>
  </View>  
   
      
 	  </View>	  
-  
+	  </View>
   </ScrollView>
   </View>
 
@@ -270,9 +282,23 @@ Hotline </Text>
 
 const styles = StyleSheet.create({
 	 
-   backgroundVideo: {
-    position: 'relative',
-	height:300    
+   formField: {
+	margin: 3,
+	height: 35,
+	padding:5,
+	alignItems:'center',
+	fontSize:20,
+	borderColor: 'black',
+	borderWidth: 1 
+  },
+  submit:{
+	fontSize:18,
+	borderColor: 'red',
+	padding:5,
+	color:'white',
+	borderWidth:1,
+	backgroundColor:'red',
+	textAlign: 'center',
   },
   logo:{
 		width:300,

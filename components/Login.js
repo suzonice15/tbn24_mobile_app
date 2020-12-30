@@ -52,16 +52,16 @@ sideMenuShow=()=>{
 
    <View style={{backgroundColor:'white',borderColor: 'black',
       borderWidth:1,marginRight:20}} >  
-  <Text style={{fontSize:25,color:'black',fontWeight:'bold',textAlign:'center',borderBottomWidth:1,paddingBottom:10}}>
+  <Text style={{fontSize:20,color:'black',textAlign:'center',borderBottomWidth:1,paddingBottom:10}}>
 Login Form</Text>
 
-  <Text style={{fontSize:18,color:'black',fontWeight:'bold',textAlign:'left',paddingBottom:1,marginTop:5,marginLeft:18}}>
+  <Text style={{fontSize:17,color:'black',textAlign:'left',paddingBottom:1,marginTop:5,marginLeft:18}}>
  E-Mail Address 
  </Text>
  
  <TextInput
-        style={{ margin: 15,
-      height: 50,fontSize:20,
+        style={{ margin: 10,
+      height: 40,fontSize:20,padding:5,
       borderColor: 'black',
       borderWidth: 2}}
         placeholder="Enter Your Email"
@@ -69,21 +69,25 @@ Login Form</Text>
       />
 	  
 	  
-	   <Text style={{fontSize:18,color:'black',fontWeight:'bold',textAlign:'left',paddingBottom:1,marginTop:5,marginLeft:18}}>
+	   <Text style={{fontSize:17,color:'black',textAlign:'left',paddingBottom:1,marginTop:5,marginLeft:18}}>
 Password </Text>
 	  
 	   <TextInput
-        style={{ fontSize:20,margin: 15,
-      height: 50,
-      borderColor: 'black',
+        style={{ fontSize:20,margin: 10,
+      height: 40,
+      borderColor: 'black',padding:5,
       borderWidth: 2}}
         placeholder="Enter Your Password"
          
       />	   
-	  <View style={{backgroundColor:'red',width:'93%',  marginBottom:15,marginLeft:15,marginTop: 5}} >  
-    <Button title="Login" style={{fontSize:20,borderColor: 'black',
-      borderWidth: 2,backgroundColor:'red',textAlignVertical: 'top',}} />	  
-	  </View>  
+	    
+
+	  <View style={{backgroundColor:'red',margin:8}} >  
+     
+	  <TouchableHighlight  underlayColor='none' >
+<Text style={styles.submit}  >Login</Text>
+</TouchableHighlight>
+	  </View>
   </View>
    	</View> 
 
@@ -183,10 +187,15 @@ Password </Text>
 
 const styles = StyleSheet.create({
 	 
-   backgroundVideo: {
-    position: 'relative',
-	height:300    
-  },
+	submit:{
+		fontSize:18,
+		borderColor: 'red',
+		padding:5,
+		color:'white',
+		borderWidth:1,
+		backgroundColor:'red',
+		textAlign: 'center',
+	  },
   logo:{
 		width:300,
 		height:80,
