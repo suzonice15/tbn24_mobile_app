@@ -35,32 +35,43 @@ class Registration  extends Component {
 		 email:'',
 		 phone:'',
 		 password:'',
-		 message:''
+		 message:'',
+		 Registration:"Registration Now"
 		 
 	 }
 	 }
 	 dataStore=()=>{
-		 
+		this.setState({Registration: "Please Wait...."})
+
 		 if(this.state.name==""){
 			  Alert.alert('Enter Your Name')
+			  this.setState({Registration: "Registration Now"})
 			 return false;
 		 }
 		  if(this.state.email==""){
+			this.setState({Registration: "Registration Now"})
+
 			  Alert.alert('Enter Your Email')
 			 return false;
 		 }
 		 
 		 let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (reg.test(this.state.email) === false) {
+	this.setState({Registration: "Registration Now"})
+
     	  Alert.alert('Enter Valid Email')
      
     return false;
   }
 		  if(this.state.phone==""){
+			this.setState({Registration: "Registration Now"})
+
 			  Alert.alert('Enter Your phone')
 			 return false;
 		 }
 		  if(this.state.password==""){
+			this.setState({Registration: "Registration Now"})
+
 			  Alert.alert('Enter Your password')
 			 return false;
 		 }
@@ -82,8 +93,23 @@ class Registration  extends Component {
 		 .then((responsData)=>{
  			
 			 
-			    Alert.alert(responsData)
+				Alert.alert(responsData)
+				
+				Navigation.push(this.props.componentId, {
+					component: {
+						name: 'HomePage', // Push the screen registered with the 'Settings' key
+						options: { // Optional options object to configure the screen
+							topBar: {
+								title: {
+									text: 'Home' // Set the TopBar title of the new Screen
+								}
+							}
+						}
+					}
+				})
 		 }).catch((erorr)=>{
+			this.setState({Registration: "Registration Now"})
+
 			 Alert.alert('Something is Wrong')
 		 })
 		 
@@ -169,7 +195,7 @@ Password </Text>
 
       
 	 <TouchableHighlight  onPress={this.dataStore}  underlayColor='none' >
-<Text style={styles.submit}  >Registration Now</Text>
+<Text style={styles.submit}  > {this.state.Registration}</Text>
 </TouchableHighlight>
 	 
 	  </View>

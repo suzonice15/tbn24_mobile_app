@@ -8,6 +8,7 @@
 
 import React,{Component} from 'react';
 import { Navigation } from "react-native-navigation";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   SafeAreaView,
@@ -19,8 +20,7 @@ import {
   Text,
   TouchableHighlight,
   ActivityIndicator,
-  FlatList,
-  TouchableOpacity,
+   TouchableOpacity,
   Modal,
   StatusBar,
   Alert
@@ -43,7 +43,13 @@ class Home  extends Component {
 			loginNotice:'',		
 			registrationNotice:'',
 			email:'',
-			password:''
+			loginModalShowStatus:1,	
+			password:'',
+			user_id:0,
+			showRegistrationModal:false,
+			modalVisible: false,
+			loginButton:"Login",
+			miniteShowNotice:false,
 		}
 	}
 	
@@ -57,27 +63,48 @@ class Home  extends Component {
 			}
 		});
 	}
+
+	toggleModal(visible) {
+		this.setState({ modalVisible: visible });
+	 }
 	   componentDidMount=()=>{
 		
-	 let URL="https://www.tbn24.com/api/video";
-		let config={method:'GET'}
+	 var URL="https://www.tbn24.com/api/video";
+	 var config={method:'GET'}
 		fetch(URL,config).then((result)=>result.json()).then((response)=>{	
 	 			this.setState({video:response,loading:false});
 		}).catch((error)=>{
 			 
-			Alert.alert("Internet Problem"); 
+			Alert.alert("No Internet Connection","You need to be connected to your network or Wi-Fi or Mobile Data"); 
 		});	
 		
 			
-		let URLNotice="https://www.tbn24.com/api/modal/notice";
-		let configNotice={method:'GET'}
+		var URLNotice="https://www.tbn24.com/api/modal/notice";
+		var configNotice={method:'GET'}
 		fetch(URLNotice,configNotice).then((result)=>result.json()).then((response)=>{	
 	 			this.setState({registrationNotice:response.five_minite,loginNotice:response.one_hour});
 		}).catch((error)=>{
-			 
+			Alert.alert("No Internet Connection","You need to be connected to your network or Wi-Fi or Mobile Data"); 
+
 			 
 		});	
+	
+		setInterval(()=>{
+			if(this.state.user_id < 1){
+			this.setState({isVisible: true,miniteShowNotice:true})
+			}
+			
+		  }, 300000);
+
+		  setInterval(()=>{
+		 
+			this.setState({isVisible: true,miniteShowNotice:false})
+			 
+			
+		  }, 3600000);
+		
 	}
+
 	
 	
 sideMenuShow=()=>{	
@@ -90,57 +117,90 @@ sideMenuShow=()=>{
 		});
 	
 	}	
-	displayModal(show){
-		this.setState({isVisible: show})
-	  }
+	
+
+	  
+
 
 	  loginSubmit=()=>{
-
+		this.setState({loginButton: "Please Wait...."})
 if(this.state.email==''){
+	this.setState({loginButton: "Login"})
 	Alert.alert('Please Enter Your Email !')
 	return false;
 }
 if(this.state.password==''){
+	this.setState({loginButton: "Login"})
 	Alert.alert('Please Enter Your Password !')
 	return false;
 }
  
 let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 if (reg.test(this.state.email) === false) {
+	this.setState({loginButton: "Login"})
 		Alert.alert('Please Enter Your Valid Email !')
    
   return false;
 }
 
 
-let URL='https://www.tbn24.com/api/home/loginCheck';
-		 let configHeader={
+var URL='https://www.tbn24.com/api/home/loginCheck';
+var configHeader={
 			 Accept:'application/json',
 			 'Content-Type':'application/json'
 		 }
-		 let configBody=JSON.stringify({
+		 var configBody=JSON.stringify({
 		 
 			 email:this.state.email,
 			 password:this.state.password,
  			 
 		 });
-		 let config={method:'POST',headers:configHeader,body:configBody}
-		 fetch(URL,config).then((response)=>response.text())
+		 var config={method:'POST',headers:configHeader,body:configBody}
+		 fetch(URL,config).then((response)=>response.json())
 		 .then((responsData)=>{	
-			if(responsData.success=='ok'){
-				this.setState({isVisible: false})
-			} else {
+		 
+			if(responsData.error=='ok'){
 				Alert.alert("Your Email Or Password Invalid Try Again")
+				this.setState({loginButton: "Login"})
+
+			} else {
+				this.setState({isVisible: false,user_id:responsData.user_id})
+				this.setState({loginButton: "Login"})
 			}
 			  
 		 }).catch((erorr)=>{
-			 Alert.alert('Something is Wrong')
+			Alert.alert("No Internet Connection","You need to be connected to your network or Wi-Fi or Mobile Data"); 
+			this.setState({loginButton: "Login"})
 		 })
 		 
 	
 
 
 	  }
+
+	  Registration=()=>{
+	
+	
+		Navigation.push('CenterScreen',{
+			
+			component:{
+				name:"RegistrationPage",
+				options:{
+					sideMenu:{
+						left:{
+							visible:false						
+						}
+					}
+					, topBar: {
+		title: {
+		  text: 'Registration',
+		  color: 'white'
+		}
+					  }
+				}
+			}
+		})
+	}
 	 
 	
 	render(){
@@ -180,7 +240,10 @@ let URL='https://www.tbn24.com/api/home/loginCheck';
 		 />
 		 }
 
-<View style={{margin:100}}>
+
+
+
+<View style={{margin:100,padding:10,width:"80%",height:"80%"}}>
 <Modal
             animationType = {"slide"}
             transparent={false}
@@ -191,7 +254,8 @@ let URL='https://www.tbn24.com/api/home/loginCheck';
 
 <View style={{margin:10}}>
               <Text style = { styles.text }>
-              {this.state.loginNotice}</Text>
+				  {this.state.miniteShowNotice ? this.state.registrationNotice:this.state.loginNotice}
+              </Text>
 				  <Text  style={styles.fieldRow}>
  E-Mail Address 
  </Text>
@@ -226,24 +290,122 @@ Password </Text>
 	  onPress={() => {
 		this.loginSubmit();}}
 	  >
-<Text style={styles.submit}  >Login</Text>
+<Text style={styles.submit}  >{this.state.loginButton}</Text>
 </TouchableHighlight>
 
 </View>
+
+<View style={{backgroundColor:'white',display:'none',flex:4,flexDirection:'row',marginTop:20}} > 
+
+<View style={{backgroundColor:'white',textAlign:'center',flex:2}}>
+<Text  style={{color:'black',textAlign:'center'}}>New to tbn24 ? </Text>
+</View>
+<View style={{backgroundColor:'white',flex:2}}>
+<TouchableHighlight onPress = {() => {this.toggleModal(true)}}>
+            <Text  style={styles.submit}   >Create an account ....</Text>
+    
+ </TouchableHighlight>
 </View>
 
-               
+</View>
+</View>
+                
           </Modal>
             
-          <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                this.displayModal(true);
-              }}>
-              <Text style={styles.buttonText}>Show Modal</Text>
-          </TouchableOpacity> 
+         
+</View>
+
+
+
+
+<View style={{margin:100}}>
+<Modal
+            animationType = {"slide"}
+            transparent={false}
+            visible={this.state.showRegistrationModal}
+            onRequestClose={() => {
+              Alert.alert('Modal has now been closed.');
+            }}>
+
+<View style={{margin:10}}>
+              <Text style = { styles.text }>
+              {this.state.loginNotice} registration </Text>
+				  <Text  style={styles.fieldRow}>
+ E-Mail Address 
+ </Text>
+ 
+ <TextInput
+ onChangeText={(value)=>this.setState({email:value})}
+ style={styles.formField}
+        placeholder="Enter Your Email"
+         
+      /> 
+  
+	  
+	  
+	   <Text style={styles.fieldRow}>
+Password </Text>
+ 
+	  
+	   <TextInput
+	   
+	   secureTextEntry={true}
+	   onChangeText={(value)=>this.setState({password:value})}
+       style={styles.formField}
+        placeholder="Enter Your Password"
+         
+      /> 
+	    
+
+	  <View style={{backgroundColor:'red',marginTop:5}} >  
+     
+	  <TouchableHighlight  underlayColor='none' 
+	  
+	  onPress={() => {
+		this.loginSubmit();}}
+	  >
+<Text style={styles.submit}  >Registration</Text>
+</TouchableHighlight>
 
 </View>
+
+<View style={{backgroundColor:'white',flex:4,flexDirection:'row',marginTop:10}} > 
+
+<View style={{backgroundColor:'white',textAlign:'center',flex:2}}>
+<Text  style={{color:'black',textAlign:'center'}}>New to tbn24 ? </Text>
+</View>
+<View style={{backgroundColor:'white',flex:2}}>
+<Text style={{color:'green',textAlign:'center'}}>Create an account .</Text>
+</View>
+
+</View>
+</View>               
+          </Modal>
+            
+        
+</View>
+
+
+<View style = {{marginTop:50}}>
+            <Modal animationType = {"slide"} transparent = {false}
+               visible = {this.state.modalVisible}
+               onRequestClose = {() => { console.log("Modal has been closed.") } }>
+               
+               <View style = {styles.modal}>
+                  <Text style = {styles.text}>Modal is open!</Text>
+                  
+                  <TouchableHighlight onPress = {() => {
+                     this.toggleModal(!this.state.modalVisible)}}>
+                     
+                     <Text style = {styles.text}>Close Modal</Text>
+                  </TouchableHighlight>
+               </View>
+            </Modal>
+            
+            <TouchableHighlight onPress = {() => {this.toggleModal(true)}}>
+               <Text style = {styles.text}>Open Modal</Text>
+            </TouchableHighlight>
+         </View>
 
       
  </View> 
@@ -395,6 +557,7 @@ marginTop:2
 		fontSize: 18,
 		marginBottom: 0,
 		padding: 20,
+		color:'black'
 	  },submit:{
 		fontSize:18,
 		borderColor: 'red',
@@ -421,6 +584,12 @@ marginTop:2
 	  borderColor: 'black',
 	  borderWidth: 1 
 	},
+	modal: {
+		flex: 1,
+		alignItems: 'center',
+		backgroundColor: 'white',
+		padding: 100
+	 },
    
 });
 

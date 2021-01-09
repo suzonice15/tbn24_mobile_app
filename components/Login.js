@@ -9,14 +9,13 @@
 import React,{Component} from 'react';
 import {
    StyleSheet,
-  ScrollView,
-  View,
+   View,
   Image,
   Text,
-  FlatList,
-  StatusBar,
-  TouchableHighlight,
+  Alert,
+   TouchableHighlight,
   Button,
+  TouchableOpacity,
   TextInput
 } from 'react-native';
  import Video from 'react-native-video';
@@ -27,6 +26,86 @@ import {
 class Login  extends Component {
 	
 	
+	constructor(props){		
+		super(props);
+		Navigation.events().bindComponent(this)
+		this.state={
+			 
+			email:'',
+		 
+			password:'',			 
+			loginButton:"Login",
+		 
+		}
+	}
+
+	loginSubmit=()=>{
+		this.setState({loginButton: "Please Wait...."})
+if(this.state.email==''){
+	this.setState({loginButton: "Login"})
+	Alert.alert('Please Enter Your Email !')
+	return false;
+}
+if(this.state.password==''){
+	this.setState({loginButton: "Login"})
+	Alert.alert('Please Enter Your Password !')
+	return false;
+}
+ 
+let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+if (reg.test(this.state.email) === false) {
+		Alert.alert('Please Enter Your Valid Email !')
+		this.setState({loginButton: "Login"})
+  return false;
+}
+
+
+var URL='https://www.tbn24.com/api/home/loginCheck';
+var configHeader={
+			 Accept:'application/json',
+			 'Content-Type':'application/json'
+		 }
+		 var configBody=JSON.stringify({
+		 
+			 email:this.state.email,
+			 password:this.state.password,
+ 			 
+		 });
+		 var config={method:'POST',headers:configHeader,body:configBody}
+		 fetch(URL,config).then((response)=>response.json())
+		 .then((responsData)=>{	
+		 
+			if(responsData.error=='ok'){
+				Alert.alert("Your Email Or Password Invalid Try Again")
+				this.setState({loginButton: "Login"})
+
+			} else {
+	 
+				Alert.alert("Login Success")
+				Navigation.push(this.props.componentId, {
+					component: {
+						name: 'HomePage', // Push the screen registered with the 'Settings' key
+						options: { // Optional options object to configure the screen
+							topBar: {
+								title: {
+									text: 'Home' // Set the TopBar title of the new Screen
+								}
+							}
+						}
+					}
+				})
+			}
+			  
+		 }).catch((erorr)=>{
+			Alert.alert("No Internet Connection","You need to be connected to your network or Wi-Fi or Mobile Data"); 
+			this.setState({loginButton: "Login"})
+		 })
+		 
+	
+
+
+	  }
+
 
 sideMenuShow=()=>{	
  		Navigation.mergeOptions(this.props.componentId,{			
@@ -38,6 +117,30 @@ sideMenuShow=()=>{
 		});
 	
 	}	
+
+	Registration=()=>{
+	
+	
+		Navigation.push('CenterScreen',{
+			
+			component:{
+				name:"RegistrationPage",
+				options:{
+					sideMenu:{
+						left:{
+							visible:false						
+						}
+					}
+					, topBar: {
+		title: {
+		  text: 'Registration',
+		  color: 'white'
+		}
+					  }
+				}
+			}
+		})
+	}
 	
 	render(){
   return ( 
@@ -51,7 +154,7 @@ sideMenuShow=()=>{
 		 <View style={{flex:77,width:"100%",backgroundColor:'white',margin:10}}>
 
    <View style={{backgroundColor:'white',borderColor: 'black',
-      borderWidth:1,marginRight:20}} >  
+      borderWidth:1,marginRight:20,marginBottom:200}} >  
   <Text style={{fontSize:20,color:'black',textAlign:'center',borderBottomWidth:1,paddingBottom:10}}>
 Login Form</Text>
 
@@ -60,6 +163,7 @@ Login Form</Text>
  </Text>
  
  <TextInput
+  onChangeText={(value)=>this.setState({email:value})}
         style={{ margin: 10,
       height: 40,fontSize:20,padding:5,
       borderColor: 'black',
@@ -73,6 +177,9 @@ Login Form</Text>
 Password </Text>
 	  
 	   <TextInput
+	     secureTextEntry={true}
+		 onChangeText={(value)=>this.setState({password:value})}
+
         style={{ fontSize:20,margin: 10,
       height: 40,
       borderColor: 'black',padding:5,
@@ -82,12 +189,46 @@ Password </Text>
       />	   
 	    
 
-	  <View style={{backgroundColor:'red',margin:8}} >  
+	  <View style={{backgroundColor:'white',margin:8,marginBottom:50}} >  
      
-	  <TouchableHighlight  underlayColor='none' >
-<Text style={styles.submit}  >Login</Text>
+	  <TouchableHighlight  underlayColor='none'
+	 
+	 onPress={() => {
+	 
+		this.loginSubmit();}} 
+	  >
+<Text style={styles.submit}  >{this.state.loginButton}</Text>
+
 </TouchableHighlight>
+
+  
+
+<View style={{backgroundColor:'white',marginTop:20,}} > 
+
+<View style={{backgroundColor:'white',textAlign:'center'}}>
+<Text  style={{color:'black',textAlign:'center',fontSize:18}}>New to tbn24 ? </Text>
+</View>
+ 
+<TouchableHighlight  underlayColor='none'
+	 
+	 onPress={() => {
+	 
+		this.Registration();}} 
+	  >
+<Text 
+ 
+ style={{color:'green',textAlign:'center',fontSize:18}}
+>Create an account .</Text>
+</TouchableHighlight>
+
+ 
+</View>
+
 	  </View>
+
+	  
+
+
   </View>
    	</View> 
 

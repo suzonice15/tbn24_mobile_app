@@ -424,17 +424,7 @@ Today's Schedule
 	 
      </View>
 	 
-	   <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
-	   
-	 <View style={{flex:1,alignItems: 'flex-end',justifyContent:'center'}}>
-	 <Image   style={styles.sideImage}   source={require('../images/user.png')} />
-	 </View>
-	 
-	 <View style={{flex:5}}>
-<Text onPress={this.Registration} style={styles.sideMenuTitle} >Registration</Text>
-	 </View>
-	 
-     </View>
+	  
 	 
 	 <View style={{flex:6,flexDirection:'row',padding:10,borderBottomWidth:1,borderColor:"#cacaca"}}>
 	 
